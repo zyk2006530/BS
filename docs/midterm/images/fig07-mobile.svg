@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
 <rect width="100%" height="100%" fill="white"/>
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#607d98"/></marker></defs>
-<text x="20" y="35" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="26" fill="#195a94">微信小程序 · 双屏设计原型（演示数据，非运行截图）</text>
+<text x="20" y="35" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="26" fill="#195a94">微信小程序 · 申请与待办原型</text>
 <rect x="50" y="65" width="390" height="550" rx="7" fill="#fafcff" stroke="#bccbd9"/>
 <rect x="50" y="65" width="390" height="60" rx="7" fill="#195a94" stroke="#bccbd9"/>
 <text x="70" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">新建报销</text>

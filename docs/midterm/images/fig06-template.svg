@@ -5,9 +5,9 @@
 <rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
 <text x="28" y="48" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">管理端 / 自定义模板设计</text>
 <text x="28" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">模板：设备借用     适用部门：研发 / 市场 / 财务     当前编辑：v2 草案</text>
-<text x="28" y="656" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">中期设计原型 · 演示数据 · 非系统运行截图</text>
+<text x="28" y="656" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型</text>
 <rect x="28" y="125" width="590" height="215" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
-<text x="44" y="157" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">字段配置 · 表单式，不要求拖拽</text>
+<text x="44" y="157" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">字段配置</text>
 <text x="44" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">标识               名称        类型      必填</text>
 <text x="44" y="219" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">device_name       设备名称    单行文本    是</text>
 <text x="44" y="248" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">reason            借用说明    多行文本    是</text>
@@ -34,6 +34,6 @@
 <text x="656" y="458" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">指定人员启用、配置有效</text>
 <text x="656" y="487" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[预览] [发布新版本] [停用]</text>
 <text x="656" y="516" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">停用只阻止新提交</text>
-<text x="28" y="570" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">员工选择模板后动态填写，无需改代码、改库或复制固定页面。</text>
+<text x="28" y="570" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">员工申请页按发布字段生成，提交时绑定模板版本。</text>
 <text x="28" y="604" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="21" fill="#243448">已发布定义不可修改；版本、字段和路径随提交实例固化。</text>
 </svg>

@@ -5,11 +5,11 @@
 <rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
 <text x="28" y="48" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">采购申请 / 编辑草稿</text>
 <text x="28" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">我的申请  ＞  新建采购      保存状态：未提交      部门由登录身份确定</text>
-<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">中期设计原型 · 演示数据 · 非系统运行截图</text>
+<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型</text>
 <rect x="28" y="125" width="570" height="120" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="44" y="157" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">基本信息</text>
 <text x="44" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">标题 [研发测试设备采购]    到货 [2026-12-10]</text>
-<text x="44" y="219" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">预算上限 [5,000.00]    项目 [课程演示]</text>
+<text x="44" y="219" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">预算上限 [5,000.00]    项目 [设备更新]</text>
 <rect x="28" y="260" width="570" height="130" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="44" y="292" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">采购明细 · 可新增 / 删除</text>
 <text x="44" y="325" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">名称           规格       数量 × 单价        金额</text>
@@ -22,7 +22,7 @@
 <text x="44" y="528" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">拟选甲；理由 [符合规格，交期满足]</text>
 <rect x="620" y="125" width="350" height="165" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="636" y="157" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">提交前检查</text>
-<text x="636" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">至少支持两条采购明细</text>
+<text x="636" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">采购明细可新增、删除</text>
 <text x="636" y="219" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">单一来源：选中后填写说明</text>
 <text x="636" y="248" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">非最低价：填写额外理由</text>
 <text x="636" y="277" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">校验失败定位到字段 / 行</text>
