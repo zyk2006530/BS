@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="590" viewBox="0 0 1000 590">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#607d98"/></marker></defs>
+<rect x="20" y="20" width="300" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="52" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">桌面 Web</text>
+<text x="36" y="85" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">Vue 3 / TypeScript</text>
+<text x="36" y="114" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">Element Plus</text>
+<rect x="660" y="20" width="320" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="676" y="52" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">微信小程序</text>
+<text x="676" y="85" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">uni-app / 卡片表单</text>
+<text x="676" y="114" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">拍照上传</text>
+<path d="M170,125 L170,175" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M820,125 L820,175" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="175" width="960" height="65" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="42" y="215" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#243448">HTTPS → Nginx → Spring Boot 模块化单体（统一 REST 接口）</text>
+<path d="M500,240 L500,270" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="270" width="300" height="115" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="302" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">身份与授权</text>
+<text x="36" y="335" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">会话 / 部门 / 角色</text>
+<text x="36" y="364" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">显式数据范围</text>
+<rect x="350" y="270" width="300" height="115" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="366" y="302" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">业务与审批</text>
+<text x="366" y="335" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">三类业务 / 版本快照</text>
+<text x="366" y="364" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">顺序审批节点</text>
+<rect x="680" y="270" width="300" height="115" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="696" y="302" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">支撑能力</text>
+<text x="696" y="335" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">附件 / 通知 / 统计</text>
+<text x="696" y="364" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">配置审计</text>
+<text x="28" y="420" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="23" fill="#195a94">业务事务：申请、节点、日志、通知、邮件任务及请求结果同库提交</text>
+<path d="M170,435 L170,450" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M500,435 L500,450" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M830,435 L830,450" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="450" width="300" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="482" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">MySQL 8</text>
+<text x="36" y="515" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">业务数据 / 会话</text>
+<text x="36" y="544" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">迁移版本</text>
+<rect x="350" y="450" width="300" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="366" y="482" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">私有附件卷</text>
+<text x="366" y="515" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">随机对象名 / 鉴权下载</text>
+<text x="366" y="544" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">异步清理</text>
+<rect x="680" y="450" width="300" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="696" y="482" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">持久通知与邮件</text>
+<text x="696" y="515" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">前台增量轮询</text>
+<text x="696" y="544" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">邮件任务重试</text>
+</svg>

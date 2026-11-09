@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#607d98"/></marker></defs>
+<text x="20" y="35" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="26" fill="#195a94">微信小程序 · 双屏设计原型（演示数据，非运行截图）</text>
+<rect x="50" y="65" width="390" height="550" rx="7" fill="#fafcff" stroke="#bccbd9"/>
+<rect x="50" y="65" width="390" height="60" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="70" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">新建报销</text>
+<rect x="550" y="65" width="390" height="550" rx="7" fill="#fafcff" stroke="#bccbd9"/>
+<rect x="550" y="65" width="390" height="60" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="570" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">待办详情</text>
+<rect x="70" y="145" width="350" height="90" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="86" y="177" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">关联本人已通过申请</text>
+<text x="86" y="210" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[差旅申请 2026-12-01]</text>
+<rect x="70" y="250" width="350" height="140" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="86" y="282" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">费用 1 / 3 · 卡片式</text>
+<text x="86" y="315" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">交通 [235.00]  日期 [12-01]</text>
+<text x="86" y="344" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[拍摄票据] [选择文件]</text>
+<text x="86" y="373" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">文件上传完成后才允许提交</text>
+<rect x="70" y="405" width="350" height="110" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="86" y="437" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">费用 2 / 3 · 可折叠</text>
+<text x="86" y="470" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">住宿 [480.00]   [查看票据]</text>
+<text x="86" y="499" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[新增费用] [保存草稿]</text>
+<rect x="70" y="540" width="350" height="50" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="88" y="574" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">合计 800.00      [校验并提交]</text>
+<rect x="570" y="145" width="350" height="110" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="586" y="177" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">审批变化自动提醒</text>
+<text x="586" y="210" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">新待办：报销 800.00</text>
+<text x="586" y="239" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[查看详情]  不手动刷新</text>
+<rect x="570" y="270" width="350" height="165" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="586" y="302" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">摘要 / 票据 / 历史</text>
+<text x="586" y="335" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">申请人、部门、提交时间</text>
+<text x="586" y="364" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">无票例外：餐饮 85.00</text>
+<text x="586" y="393" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[预览票据] [关联申请摘要]</text>
+<text x="586" y="422" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">部门审核 → 财务审核</text>
+<rect x="570" y="450" width="350" height="140" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="586" y="482" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">意见与审批</text>
+<text x="586" y="515" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[意见输入；驳回必填]</text>
+<text x="586" y="544" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[批准]       [驳回]</text>
+<text x="586" y="573" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">弱网冲突刷新；禁止自审</text>
+</svg>

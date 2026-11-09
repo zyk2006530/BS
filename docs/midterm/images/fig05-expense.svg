@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="660" viewBox="0 0 1000 660">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#607d98"/></marker></defs>
+<rect x="8" y="8" width="984" height="644" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="28" y="48" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">报销申请 / 费用与票据</text>
+<text x="28" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">关联 [本人已通过差旅]    独立报销 [否]    无关联时须填写说明</text>
+<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">中期设计原型 · 演示数据 · 非系统运行截图</text>
+<rect x="28" y="130" width="580" height="280" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="44" y="162" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">费用明细 · 每行独立管理票据</text>
+<text x="44" y="195" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">交通  2026-12-01  高铁     235.00   [车票.pdf]</text>
+<text x="44" y="224" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">住宿  2026-12-01  住宿     480.00   [住宿.png]</text>
+<text x="44" y="253" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">餐饮  2026-12-01  工作餐    85.00   [无票例外]</text>
+<text x="44" y="282" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">无票原因 [电子票据未取得]  ← 财务端醒目标记</text>
+<text x="44" y="311" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[新增费用]  [删除此行]  [上传票据]</text>
+<text x="44" y="340" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">本单同票据只能绑定一次；服务端重算合计</text>
+<rect x="630" y="130" width="340" height="160" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="646" y="162" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">申请摘要 / 审核模式</text>
+<text x="646" y="195" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">申请人与部门：服务端填写</text>
+<text x="646" y="224" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">费用合计：800.00</text>
+<text x="646" y="253" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">关联单：只读摘要及权限跳转</text>
+<text x="646" y="282" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">票据预览：鉴权后读取</text>
+<rect x="630" y="310" width="340" height="205" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="646" y="342" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">审批时间线 / 当前待办</text>
+<text x="646" y="375" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">提交：申请人、时间</text>
+<text x="646" y="404" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">部门负责人 → 财务 → 条件节点</text>
+<text x="646" y="433" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">无票 / 单一来源高亮展示</text>
+<text x="646" y="462" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[批准] [驳回并填写理由]</text>
+<text x="646" y="491" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">非本人当前节点不显示按钮</text>
+<rect x="28" y="430" width="580" height="130" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="44" y="462" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">提交与失败反馈</text>
+<text x="44" y="495" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[保存草稿] [提交]；撤回 / 删除二次确认</text>
+<text x="44" y="524" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">字段错误：明细第 3 行缺少无票原因</text>
+<text x="44" y="553" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">冲突：记录已变化，保留输入并刷新状态</text>
+</svg>

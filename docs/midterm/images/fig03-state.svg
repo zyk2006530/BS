@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="470" viewBox="0 0 1000 470">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#607d98"/></marker></defs>
+<rect x="20" y="160" width="170" height="90" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="192" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">草稿</text>
+<text x="36" y="225" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">可编辑 / 删除</text>
+<rect x="325" y="160" width="230" height="90" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="341" y="192" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">审批中</text>
+<text x="341" y="225" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">仅当前节点可操作</text>
+<path d="M190,205 L325,205" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="225" y="187" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#243448">提交</text>
+<rect x="740" y="30" width="230" height="75" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="756" y="62" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">已通过</text>
+<rect x="740" y="160" width="230" height="75" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="756" y="192" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">已驳回</text>
+<rect x="740" y="290" width="230" height="75" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="756" y="322" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">已撤回</text>
+<path d="M555,180 L740,70" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="555" y="102" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="21" fill="#243448">最后节点批准</text>
+<path d="M555,205 L740,205" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="583" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="21" fill="#243448">驳回 + 理由</text>
+<path d="M555,235 L740,325" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="588" y="298" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="21" fill="#243448">本人撤回</text>
+<path d="M440,160 L440,90" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M440,90 L525,90" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M525,90 L525,160" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="300" y="65" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="21" fill="#243448">中间节点批准 → 下一节点</text>
+<text x="20" y="405" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="23" fill="#195a94">终态不可回退；驳回 / 撤回后复制为新草稿，并记录原申请 ID。</text>
+<text x="20" y="442" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#243448">所有状态变更携带预期版本；同一版本的审批与撤回最多一项成功。</text>
+</svg>

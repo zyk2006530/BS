@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#607d98"/></marker></defs>
+<text x="20" y="35" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="#195a94">核心实体关系（1:N 表示一对多，关联均以 ID 固化）</text>
+<rect x="20" y="70" width="270" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="102" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">部门 / 用户 / 角色</text>
+<text x="36" y="135" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">部门 1:N 用户</text>
+<text x="36" y="164" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">用户 M:N 角色</text>
+<rect x="365" y="70" width="270" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="381" y="102" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">模板 / 模板版本</text>
+<text x="381" y="135" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">模板 1:N 不可变版本</text>
+<rect x="710" y="70" width="270" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="726" y="102" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">附件元数据</text>
+<text x="726" y="135" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">上传人 / 对象键</text>
+<text x="726" y="164" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">大小 / 状态</text>
+<rect x="365" y="255" width="270" height="120" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="381" y="287" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">申请 application</text>
+<text x="381" y="320" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">人员、部门、金额快照</text>
+<text x="381" y="349" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">状态、原单、模板版本</text>
+<rect x="20" y="445" width="270" height="125" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="477" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">固定业务扩展</text>
+<text x="36" y="510" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">各业务扩展：0..1</text>
+<text x="36" y="539" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">采购/报价/费用行：1:N</text>
+<rect x="365" y="445" width="270" height="125" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="381" y="477" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">流程实例 / 节点</text>
+<text x="381" y="510" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">申请 0..1 实例</text>
+<text x="381" y="539" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">实例 1:N 节点及审批人</text>
+<rect x="710" y="445" width="270" height="125" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="726" y="477" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">附件绑定 / 通知</text>
+<text x="726" y="510" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">申请 1:N 绑定 / 通知</text>
+<text x="726" y="539" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">费用行 1:N 票据绑定</text>
+<path d="M155,175 L365,285" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="155" y="235" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="19" fill="#243448">1:N</text>
+<path d="M500,175 L500,255" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="512" y="218" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="19" fill="#243448">1:N</text>
+<path d="M830,175 L830,445" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="842" y="325" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="19" fill="#243448">1:N 绑定</text>
+<path d="M365,350 L155,445" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="170" y="400" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="19" fill="#243448">0..1</text>
+<path d="M500,375 L500,445" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="510" y="415" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="19" fill="#243448">0..1</text>
+<path d="M635,350 L830,445" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="785" y="399" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="19" fill="#243448">1:N</text>
+<rect x="20" y="605" width="960" height="70" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="36" y="637" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">审批记录 / 配置审计：追加保存，引用申请、节点和操作人，不级联删除</text>
+<path d="M500,570 L500,605" fill="none" stroke="#607d98" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>
