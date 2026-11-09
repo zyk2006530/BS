@@ -6,7 +6,6 @@
 
 - [report.typ](<report.typ>)：正文与封面。
 - [draw_design.py](<draw_design.py>)：架构、实体、状态及四张界面原型的绘图源，共7张SVG。
-- [截图指导.md](<截图指导.md>)：图件生成、编译和版本检查步骤；无待补截图。
 - [template.typ](<vendor/template.typ>)、[LICENSE](<vendor/LICENSE>)：ZJU模板及许可，保留原版。
 
 ## 构建
@@ -24,4 +23,4 @@ typst compile report.typ 中期设计文档-修订版.pdf
 
 ## 版本
 
-仓库根位于本目录的上两级，文档在 docs/midterm-design 分支维护并同步远端。旧版保留在Git历史中；课程转写、预览缓存和本地旧PDF不纳入当前交付。
+仓库根位于本目录的上两级，文档在 docs/midterm-design 分支维护并同步远端。仓库保留PDF与构建必需文件，最终交付只提供PDF。材料转写、提取脚本、审查记录、设计依据、辅助指导、预览缓存及本地旧PDF均由忽略规则排除；旧版保留在Git历史中。

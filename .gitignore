@@ -1,0 +1,12 @@
+# 本地交付目录与压缩包
+/交付/
+*.zip
+
+# 临时文件与缓存
+__pycache__/
+*.py[cod]
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
+~$*

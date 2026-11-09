@@ -5,3 +5,8 @@ materials/
 __pycache__/
 # 旧版保留于Git历史，当前交付使用修订版
 /中期设计文档.pdf
+# 材料提取、工作记录与辅助指导不作为项目源码提交
+/extract_materials.py
+/审查记录.md
+/设计依据.md
+/截图指导.md
