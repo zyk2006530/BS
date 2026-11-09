@@ -1,0 +1,5 @@
+# Keep generated documents byte-for-byte; PDF can be misdetected as text.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.zip binary
