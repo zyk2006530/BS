@@ -5,7 +5,7 @@
 <rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
 <text x="28" y="48" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">管理端 / 自定义模板设计</text>
 <text x="28" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">模板：设备借用     适用部门：研发 / 市场 / 财务     当前编辑：v2 草案</text>
-<text x="28" y="656" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型</text>
+<text x="28" y="656" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型 · 示例数据</text>
 <rect x="28" y="125" width="590" height="215" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="44" y="157" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">字段配置</text>
 <text x="44" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">标识               名称        类型      必填</text>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+<title id="title">用户与权限管理</title>
+<desc id="desc">静态界面设计，非真实实现截图；全部人员、业务和统计数值均为示例。</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect x="8" y="8" width="984" height="584" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="28.00" y="48.10" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="26" fill="#ffffff">用户与权限管理</text>
+<text x="28.00" y="579.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">界面原型·示例数据</text>
+<rect x="28" y="94" width="454" height="202" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="28" y="94" width="454" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="42.00" y="124.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">用户确认</text>
+<rect x="44" y="150" width="422" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="54.00" y="176.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">李明  /  研发部  /  待确认</text>
+<text x="44.00" y="220.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">核对姓名、部门与账号归属</text>
+<rect x="44" y="242" width="182" height="38" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="95.00" y="268.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#ffffff">确认启用</text>
+<rect x="242" y="242" width="224" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="284.00" y="268.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">拒绝并填写原因</text>
+<rect x="502" y="94" width="470" height="202" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="502" y="94" width="470" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="516.00" y="124.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">部门负责人任命</text>
+<rect x="518" y="150" width="438" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="528.00" y="176.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">部门：研发部  ▾</text>
+<rect x="518" y="196" width="438" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="528.00" y="222.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">现任：王宁 → 新任：陈工  ▾</text>
+<rect x="518" y="242" width="438" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="647.00" y="268.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">核对待办后确认任命</text>
+<rect x="28" y="312" width="454" height="226" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="28" y="312" width="454" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="42.00" y="342.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">角色与显式授权</text>
+<rect x="44" y="368" width="422" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="54.00" y="394.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">用户：赵敏  /  角色：财务审核</text>
+<rect x="44" y="414" width="422" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="54.00" y="440.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">正文阅读｜研发部｜至12-31</text>
+<text x="44.00" y="482.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">能力、范围与期限分别选择</text>
+<rect x="44" y="496" width="422" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="154.00" y="522.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">新增授权 / 保存角色</text>
+<rect x="502" y="312" width="470" height="226" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="502" y="312" width="470" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="516.00" y="342.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">停用账号</text>
+<rect x="518" y="368" width="438" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="528.00" y="394.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">王宁：负责人 1 项；待办 2 项</text>
+<rect x="518" y="414" width="438" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="528.00" y="440.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">接收人：陈工  ▾  [交接核对]</text>
+<text x="518.00" y="482.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">有责任或待办时禁止直接停用</text>
+<rect x="518" y="496" width="438" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="627.00" y="522.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">先完成交接，再确认停用</text>
+</svg>

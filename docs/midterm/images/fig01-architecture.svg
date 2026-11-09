@@ -40,6 +40,6 @@
 <text x="366" y="544" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">异步清理</text>
 <rect x="680" y="450" width="300" height="105" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="696" y="482" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">持久通知与邮件</text>
-<text x="696" y="515" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">前台增量轮询</text>
+<text x="696" y="515" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">前台摘要轮询</text>
 <text x="696" y="544" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">邮件任务重试</text>
 </svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+<title id="title">申请工作台</title>
+<desc id="desc">静态界面设计，非真实实现截图；全部人员、业务和统计数值均为示例。</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect x="8" y="8" width="984" height="584" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="28.00" y="48.10" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="26" fill="#ffffff">申请工作台</text>
+<text x="28.00" y="579.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">界面原型·示例数据</text>
+<rect x="28" y="91" width="206" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="63.00" y="117.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">我的申请  12</text>
+<rect x="250" y="91" width="206" height="38" rx="7" fill="#195a94" stroke="#bccbd9"/>
+<text x="312.00" y="117.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#ffffff">待办  3</text>
+<rect x="472" y="91" width="206" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="527.00" y="117.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">已办  18</text>
+<text x="704.00" y="117.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">当前显示：待办</text>
+<rect x="28" y="144" width="216" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="38.00" y="170.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">类型：全部  ▾</text>
+<rect x="260" y="144" width="216" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="270.00" y="170.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">部门：研发  ▾</text>
+<rect x="492" y="144" width="274" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="502.00" y="170.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">提交日：近 30 天  ▾</text>
+<rect x="784" y="144" width="188" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="817.00" y="170.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">查询 / 重置</text>
+<rect x="28" y="188" width="216" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="38.00" y="214.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">状态：全部  ▾</text>
+<rect x="260" y="188" width="712" height="38" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<text x="270.00" y="214.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">关键词：标题 / 编号  [设备]</text>
+<rect x="28" y="238" width="944" height="170" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="28" y="238" width="944" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="42.00" y="268.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">当前待办</text>
+<text x="44.00" y="308.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">申请编号 / 业务</text>
+<text x="350.00" y="308.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">申请人</text>
+<text x="514.00" y="308.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">当前节点</text>
+<text x="862.00" y="308.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">操作</text>
+<path d="M44,317 L956,317" fill="none" stroke="#bccbd9" stroke-width="1.5"/>
+<text x="44.00" y="343.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">BX-021  差旅报销</text>
+<text x="350.00" y="343.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">李明</text>
+<text x="514.00" y="343.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">财务审核</text>
+<rect x="862" y="318" width="94" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="889.00" y="344.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">处理</text>
+<text x="44.00" y="391.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">CG-018  设备采购</text>
+<text x="350.00" y="391.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">王宁</text>
+<text x="514.00" y="391.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">部门审核</text>
+<rect x="862" y="366" width="94" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="889.00" y="392.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">处理</text>
+<rect x="726" y="318" width="120" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="736.00" y="344.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">超时 26h</text>
+<text x="28.00" y="444.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">共 3 条；每页 2 条</text>
+<rect x="590" y="418" width="158" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="639.00" y="444.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">上一页</text>
+<rect x="764" y="418" width="208" height="38" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="782.00" y="444.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#195a94">1 / 2   下一页</text>
+<rect x="28" y="470" width="454" height="80" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="28" y="470" width="454" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="42.00" y="500.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">空态 · 切换至我的申请</text>
+<text x="44.00" y="539.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">暂无匹配记录   清空筛选 / 新建</text>
+<rect x="502" y="470" width="470" height="80" rx="7" fill="#ffffff" stroke="#bccbd9"/>
+<rect x="502" y="470" width="470" height="46" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<text x="516.00" y="500.70" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">加载失败 · 切换至已办</text>
+<text x="518.00" y="539.00" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#60758b">列表未加载，保留筛选   [重试]</text>
+</svg>

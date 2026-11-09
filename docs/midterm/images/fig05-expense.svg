@@ -5,15 +5,15 @@
 <rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
 <text x="28" y="48" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">报销申请 / 费用与票据</text>
 <text x="28" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">关联 [本人已通过差旅]    独立报销 [否]    无关联时须填写说明</text>
-<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型</text>
+<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型 · 示例数据</text>
 <rect x="28" y="130" width="580" height="280" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
-<text x="44" y="162" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">费用明细 · 每行独立管理票据</text>
+<text x="44" y="162" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">费用明细 · 每份票据可填写独立票号</text>
 <text x="44" y="195" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">交通  2026-12-01  高铁     235.00   [车票.pdf]</text>
 <text x="44" y="224" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">住宿  2026-12-01  住宿     480.00   [住宿.png]</text>
 <text x="44" y="253" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">餐饮  2026-12-01  工作餐    85.00   [无票例外]</text>
 <text x="44" y="282" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">无票原因 [电子票据未取得]  ← 财务端醒目标记</text>
-<text x="44" y="311" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[新增费用]  [删除此行]  [上传票据]</text>
-<text x="44" y="340" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">本单同票据只能绑定一次；服务端重算合计</text>
+<text x="44" y="311" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">[新增费用] [上传票据] [票号 / 上传信息]</text>
+<text x="44" y="340" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">相同文件跨单提示；同单禁止重复绑定</text>
 <rect x="630" y="130" width="340" height="160" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="646" y="162" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">申请摘要 / 审核模式</text>
 <text x="646" y="195" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">申请人与部门：服务端填写</text>

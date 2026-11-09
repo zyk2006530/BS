@@ -10,3 +10,27 @@ __pycache__/
 Thumbs.db
 .DS_Store
 ~$*
+
+# 本地密钥与环境（仅允许提交无真实密钥的示例）
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.key
+*.p12
+*.pfx
+
+# 依赖、构建与本地运行数据
+node_modules/
+/target/
+/backend/target/
+/web/dist/
+/mobile/dist/
+/mobile/unpackage/
+/.venv/
+/.pytest_cache/
+/.coverage
+/.local/
+/deploy/data/
+/deploy/uploads/
+/deploy/backups/

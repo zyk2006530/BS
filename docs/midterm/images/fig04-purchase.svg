@@ -5,16 +5,16 @@
 <rect x="8" y="8" width="984" height="62" rx="7" fill="#195a94" stroke="#bccbd9"/>
 <text x="28" y="48" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="25" fill="white">采购申请 / 编辑草稿</text>
 <text x="28" y="104" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">我的申请  ＞  新建采购      保存状态：未提交      部门由登录身份确定</text>
-<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型</text>
+<text x="28" y="636" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="18" fill="#66788a">界面原型 · 示例数据</text>
 <rect x="28" y="125" width="570" height="120" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="44" y="157" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">基本信息</text>
 <text x="44" y="190" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">标题 [研发测试设备采购]    到货 [2026-12-10]</text>
 <text x="44" y="219" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">预算上限 [5,000.00]    项目 [设备更新]</text>
 <rect x="28" y="260" width="570" height="130" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
-<text x="44" y="292" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">采购明细 · 可新增 / 删除</text>
+<text x="44" y="292" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">采购明细 · 含税单价，可新增 / 删除</text>
 <text x="44" y="325" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">名称           规格       数量 × 单价        金额</text>
 <text x="44" y="354" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">测试设备 A     标准型     2 × 1,200.00     2,400.00</text>
-<text x="44" y="383" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">适配组件 B     标准型     2 ×   300.00       600.00</text>
+<text x="44" y="383" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">适配组件 B     标准型     2 ×   275.00       550.00</text>
 <rect x="28" y="405" width="570" height="135" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="44" y="437" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">供应商比价 · 同一清单、含税含运费</text>
 <text x="44" y="470" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">甲：3,000.00   2026-12-01   链接 / 截图</text>
@@ -26,12 +26,13 @@
 <text x="636" y="219" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">单一来源：选中后填写说明</text>
 <text x="636" y="248" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">非最低价：填写额外理由</text>
 <text x="636" y="277" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">校验失败定位到字段 / 行</text>
-<rect x="620" y="310" width="350" height="165" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
+<rect x="620" y="310" width="350" height="195" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="636" y="342" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="24" fill="#195a94">系统重算</text>
-<text x="636" y="375" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">预计总额：3,000.00</text>
-<text x="636" y="404" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">预算上限：5,000.00</text>
-<text x="636" y="433" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">拟选供应商须有有效报价</text>
-<text x="636" y="462" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">提交时固化规则及实际人员</text>
+<text x="636" y="375" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">含税明细：2,950.00</text>
+<text x="636" y="404" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">运费：50.00；其他：0.00</text>
+<text x="636" y="433" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">总额：3,000.00 / 预算5,000</text>
+<text x="636" y="462" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">拟选报价差额：0.00</text>
+<text x="636" y="491" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="20" fill="#243448">其他费用非零须填说明</text>
 <rect x="28" y="558" width="570" height="48" rx="7" fill="#edf4fa" stroke="#bccbd9"/>
 <text x="45" y="590" font-family="Microsoft YaHei, Noto Sans SC, sans-serif" font-size="22" fill="#195a94">[保存草稿]     [预览审批路径]     [校验并提交]</text>
 </svg>
