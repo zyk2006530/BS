@@ -1,6 +1,6 @@
 # 企业审批系统
 
-《BS 体系软件设计》课程项目。已实现 **TASK-02 数据库迁移和工程增量、TASK-03 身份会话、TASK-04 组织角色与独立授权、TASK-05 草稿查询及公共版本协议后端**：基础数据库和最小权限、注册/登录与安全会话、带审计和双版本的管理接口、固定类型草稿及幂等写入。同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无提交/审批执行或业务 UI，局部验证不能代表完整业务可用。
+《BS 体系软件设计》课程项目。已实现 **TASK-02 数据库迁移和工程增量、TASK-03 身份会话、TASK-04 组织角色与独立授权、TASK-05 草稿查询及公共版本协议、TASK-06 私有附件与绑定、TASK-07/08 采购/差旅/报销固定业务校验后端**：包括私有流式上传、持久清理与完整性核对，以及服务端金额重算、自然日、多票和关联原单摘要预检。同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无提交/审批执行或业务 UI，局部验证不能代表完整业务可用。
 
 ## 从这里开始
 
@@ -20,6 +20,8 @@
 | [TASK-04/05 验证记录](<specs/001-enterprise-approval/task0405-validation.md>) | 组织授权、固定草稿、幂等和事务验证及尚未集成的边界 |
 | [组织管理 API](<specs/001-enterprise-approval/organization-api.md>) | 双版本管理、负责人关系、范围授权及审计契约 |
 | [草稿公共写协议](<specs/001-enterprise-approval/draft-write-protocol.md>) | 字段、行键、幂等重试及两端同单版本写队列 |
+| [私有附件接口](<specs/001-enterprise-approval/private-files-api.md>) | 上传、业务授权、绑定、租约和持久清理 |
+| [固定业务校验契约](<specs/001-enterprise-approval/fixed-business-validation-api.md>) | 三类表单完整校验与 TASK-09 提交快照接入 |
 
 ## 最新设计的关键选择
 

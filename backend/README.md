@@ -1,13 +1,13 @@
 # Backend
 
-Java 17.0.17+10、Maven 3.9.11、Spring Boot 3.5.7。默认启动仍是封闭骨架；显式启用 `db` 且未启用 `migrate` 时加载身份、组织管理及草稿查询服务。身份历史证据见 [TASK-03 验证记录](<../specs/001-enterprise-approval/task03-validation.md>)；TASK-04/05 的公共写协议见[草稿版本与重试协议](<../specs/001-enterprise-approval/draft-write-protocol.md>)。
+Java 17.0.17+10、Maven 3.9.11、Spring Boot 3.5.7。默认启动仍是封闭骨架；显式启用 `db` 且未启用 `migrate` 时加载身份、组织管理、草稿查询、私有附件及固定业务完整校验服务。身份历史证据见 [TASK-03 验证记录](<../specs/001-enterprise-approval/task03-validation.md>)；TASK-04/05 的公共写协议见[草稿版本与重试协议](<../specs/001-enterprise-approval/draft-write-protocol.md>)。
 
 ## 启动模式
 
 | profile | 行为 |
 | --- | --- |
 | 默认 | 不加载数据库；仅健康入口开放，其余入口拒绝 |
-| `db` | 连接 MySQL，加载身份、组织管理和草稿查询入口；常驻进程须显式关闭 Flyway |
+| `db` | 连接 MySQL，加载身份、组织管理、草稿、私有附件和完整校验入口；常驻进程须显式关闭 Flyway |
 | `db,migrate` | 迁移用途；不加载 TASK-03 身份服务和控制器，迁移流程结束退出 |
 | `db,demo` | 额外运行独立演示种子，须显式提供 `APP_DEMO_PASSWORD`；不用于生产 |
 
@@ -96,7 +96,7 @@ Web 登录只设置 `sid` Cookie，不向体暴露会话令牌；Cookie 为 Path
 | Enforcer / compiler / Surefire | 3.6.2 / 3.14.1 / 3.5.4 | 工具约束、编译、测试 | Apache-2.0 |
 | Azul Zulu OpenJDK（本地验证） | 17.62.17 / Java 17.0.17+10 | 本地运行时 | GPL-2.0 with Classpath Exception |
 
-TASK-02 历史验证见 [TASK-02 记录](<../specs/001-enterprise-approval/task-02-validation.md>)。MyBatis-Plus 尚未引入，本次直接采用 JDBC，未新增依赖。尚未实现业务 UI、提交、正式扩展正文、附件 HTTP 接口或统计 API；TASK-09/TASK-10 模板与流程执行继续保持学生独立编码边界。
+TASK-02 历史验证见 [TASK-02 记录](<../specs/001-enterprise-approval/task-02-validation.md>)。MyBatis-Plus 尚未引入，本次直接采用 JDBC，未新增依赖。尚未实现业务 UI、提交、正式扩展正文或统计 API；TASK-09/TASK-10 模板与流程执行继续保持学生独立编码边界。
 
 ## TASK-04 组织与权限管理
 
@@ -113,4 +113,14 @@ TASK-02 历史验证见 [TASK-02 记录](<../specs/001-enterprise-approval/task-
 - `PUT /api/v1/applications/{id}/draft`：`expectedVersion,title,remark,payload`，完整替换草稿；允许未填完整，但出现的字段必须符合固定语法。
 - `DELETE /api/v1/applications/{id}`：JSON 正文 `expectedVersion`，成功 204。
 
-创建、保存、删除必须带 UUID `Idempotency-Key`。相同成功请求可重放，异内容/异目标冲突 409；权限检查先于历史重放，重放先于旧版本检查。金额、ID、版本均为字符串。稳定行键、附件解绑与清理候选、客户端串行写队列及重试规则见[公共写协议](<../specs/001-enterprise-approval/draft-write-protocol.md>)。目前不提供附件物理删除或前端队列实现。
+创建、保存、删除必须带 UUID `Idempotency-Key`。相同成功请求可重放，异内容/异目标冲突 409；权限检查先于历史重放，重放先于旧版本检查。金额、ID、版本均为字符串。稳定行键、附件解绑与清理候选、客户端串行写队列及重试规则见[公共写协议](<../specs/001-enterprise-approval/draft-write-protocol.md>)。附件 API 和物理清理由 TASK-06 提供；前端串行队列界面仍待 TASK-13/14 集成。
+
+## TASK-06 私有附件和维护任务
+
+`POST /api/v1/files` 接受一个 `file` part；绑定、解绑共用申请版本与 UUID 幂等键。业务读取不能由管理员身份绕过；已绑定文件必须提供当前有正文权限的 `applicationId`。文件落到 `APP_UPLOAD_DIR` 指定的后端私有卷，不能置于静态目录。维护任务以数据库状态和领取租约协调共享对象、失败重试、过期上传、24 小时未绑定对象及每日摘要核对；详见[附件接口与运维契约](<../specs/001-enterprise-approval/private-files-api.md>)。
+
+## TASK-07/08 固定业务校验
+
+`POST /api/v1/applications/{id}/validate` 携带字符串 `expectedVersion`，读取本人已保存草稿，返回服务端 `amount`、差旅 `naturalDays` 和版本化 `formSnapshot`。它不写正式行、不推进版本、不生成申请编号或流程实例。采购逐行 HALF_UP 后汇总；差旅按北京时间自然日；报销票号保存在逐个绑定，整行选择有票或无票。关联原单只接受本人已通过采购/差旅的冻结快照，学生模块未提供该来源时安全返回 503，不使用可变草稿冒充。字段与学生提交事务接入要求见[完整校验和快照契约](<../specs/001-enterprise-approval/fixed-business-validation-api.md>)。
+
+构建后运行 `python scripts/verify_task060708_mysql.py`，脚本自动启动隔离 MySQL、使用临时私有卷、冻结当前 JAR 并检查真实 HTTP/SQL；需要 Docker，默认不重新构建，也不修改本地开发数据库。断网、慢上传和磁盘故障应按契约重试，不能把独立预检结果当作最终提交授权。

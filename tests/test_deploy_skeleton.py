@@ -123,6 +123,14 @@ def validate_config(config: dict, backend: str, frontend: str, nginx: str) -> No
     require(not re.search(r"\balias\b\s+[^;]+;", nginx), "no public filesystem aliases")
     require("/var/lib/approval/uploads" not in nginx, "no static attachment path")
     require("location ~ ^/(uploads|attachments|private)(/|$)" in nginx, "explicit private path denial")
+    upload = re.search(r"location = /api/v1/files\s*\{([^}]+)\}", nginx)
+    require(upload is not None, "exact upload proxy location")
+    upload_config = upload.group(1)
+    require("client_max_body_size 11m;" in upload_config, "upload multipart envelope bound")
+    require("proxy_request_buffering off;" in upload_config, "upload must stream to backend deadline")
+    require("proxy_read_timeout 125s;" in upload_config and "proxy_send_timeout 125s;" in upload_config, "upload timeout must cover server deadline")
+    without_upload = nginx[:upload.start()] + nginx[upload.end():]
+    require("client_max_body_size 1m;" in without_upload and "client_max_body_size 11m;" not in without_upload, "JSON limit must remain separate from upload")
 
 
 def validate_registry_evidence(raw: bytes, entry: dict) -> None:
@@ -160,6 +168,15 @@ class DeploySkeletonTests(unittest.TestCase):
 
     def test_reviewed_configuration(self) -> None:
         self.check()
+
+    def test_upload_proxy_preserves_private_streaming_boundaries(self) -> None:
+        for before, after in (("location = /api/v1/files", "location /api/v1/files"),
+                              ("client_max_body_size 11m;", "client_max_body_size 100m;"),
+                              ("proxy_request_buffering off;", "proxy_request_buffering on;"),
+                              ("proxy_read_timeout 125s;", "proxy_read_timeout 30s;"),
+                              ("client_max_body_size 1m;", "client_max_body_size 11m;")):
+            with self.subTest(before=before), self.assertRaises(ValueError):
+                self.check(nginx=self.nginx.replace(before, after))
 
     def test_reject_database_host_port(self) -> None:
         config = copy.deepcopy(self.config)

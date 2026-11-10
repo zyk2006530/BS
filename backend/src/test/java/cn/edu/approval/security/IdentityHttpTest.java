@@ -89,7 +89,13 @@ class IdentityHttpTest {
   void businessRoutesRequireAuthenticatedActiveAccountAndForcedPasswordCannotBypass()
       throws Exception {
     for (String path :
-        new String[] {"/api/v1/admin/config", "/api/v1/applications", "/api/v1/applications/1"}) {
+        new String[] {
+          "/api/v1/admin/config",
+          "/api/v1/applications",
+          "/api/v1/applications/1",
+          "/api/v1/files",
+          "/api/v1/files/1/download"
+        }) {
       mvc.perform(get(path)).andExpect(status().isUnauthorized());
       mvc.perform(get(path).header("Authorization", "Bearer " + TOKEN))
           .andExpect(status().isForbidden())

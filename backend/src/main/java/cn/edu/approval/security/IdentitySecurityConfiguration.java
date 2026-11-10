@@ -85,7 +85,11 @@ public class IdentitySecurityConfiguration {
                     .requestMatchers(org.springframework.http.HttpMethod.PATCH, "/api/v1/profile")
                     .permitAll()
                     .requestMatchers(
-                        "/api/v1/admin/**", "/api/v1/applications", "/api/v1/applications/**")
+                        "/api/v1/admin/**",
+                        "/api/v1/applications",
+                        "/api/v1/applications/**",
+                        "/api/v1/files",
+                        "/api/v1/files/**")
                     .permitAll()
                     .anyRequest()
                     .denyAll())

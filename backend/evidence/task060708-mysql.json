@@ -1,0 +1,108 @@
+{
+  "task": "TASK-06/07/08",
+  "generated_at": "2026-11-10T09:19:10.776684+00:00",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "name": "isolated migration and startup",
+      "status": "PASS",
+      "detail": "fresh MySQL8 V1-latest migration; runtime approval_app; owner/outsider/admin SQL identity fixtures only",
+      "seconds": "15.088"
+    },
+    {
+      "name": "private streaming upload and access control",
+      "status": "PASS",
+      "detail": "private READY bytes+sha256+string sizes; >1MiB streamed; anonymous/outsider/SYS_ADMIN denied; no-store/nosniff",
+      "seconds": "0.830"
+    },
+    {
+      "name": "upload validation and byte bound",
+      "status": "PASS",
+      "detail": "extension/MIME/header/path mismatch, extra multipart part and >10MiB rejected; JPG/PNG/PDF header fixtures accepted; PDF preview forced attachment; no oversized READY rows",
+      "seconds": "2.870"
+    },
+    {
+      "name": "binding idempotency deduplication and bound context",
+      "status": "PASS",
+      "detail": "bind+version+success replay; same object/hash duplicate and changed idempotency fingerprint409; bound access requires current application context",
+      "seconds": "1.163"
+    },
+    {
+      "name": "purchase complete validation and money recomputation",
+      "status": "PASS",
+      "detail": "purchase row HALF_UP sum11.05, budget and whole quote mismatch; quote minimum/single source; field errors; read-only version and authorization",
+      "seconds": "3.407"
+    },
+    {
+      "name": "travel dates and transport validation",
+      "status": "PASS",
+      "detail": "UTC-Z start/end; Beijing midnight2days/same-day1; end-before-start and OTHER without reason rejected; budget20000 no flow execution",
+      "seconds": "2.400"
+    },
+    {
+      "name": "reimbursement receipts and independent validation",
+      "status": "PASS",
+      "detail": "reimbursement independent reason+sum; missing receipt rejected; per-binding receipt number; noReceipt and receipt mutually exclusive",
+      "seconds": "2.325"
+    },
+    {
+      "name": "approved related application snapshot contract",
+      "status": "PASS",
+      "detail": "missing student snapshot schema503; explicit isolated read-only flow_instance fixture only; own approved summary, repeated association no decrement, other owner/draft denied; no flow generation",
+      "seconds": "4.802"
+    },
+    {
+      "name": "concurrent binding replay",
+      "status": "PASS",
+      "detail": "four real concurrent bind retries: one DB binding and one version increment, identical success replay",
+      "seconds": "0.813"
+    },
+    {
+      "name": "persistent cleanup after unbind",
+      "status": "PASS",
+      "detail": "unbind atomic version/replay; persistent worker moved unreferenced object through DELETING to DELETED",
+      "seconds": "1.084"
+    },
+    {
+      "name": "shared reference cleanup and damaged object protection",
+      "status": "PASS",
+      "detail": "shared reference protects bytes after one unbind; missing bytes marked DAMAGED and history retained; new binding denied; last unbind cleans missing bytes successfully",
+      "seconds": "2.655"
+    },
+    {
+      "name": "real stalled network two minute deadline",
+      "status": "PASS",
+      "detail": "real unfinished TCP multipart request received408 UPLOAD_TIMEOUT after120.08s; no READY row; no client timeout shortening",
+      "seconds": "120.524"
+    },
+    {
+      "name": "interruption-state restart recovery and lease protection",
+      "status": "PASS",
+      "detail": "restart with upload-partial, renamed-before-READY, already-deleted bytes and 24h-unbound fixtures recovered; old disk orphan reclaimed; live15min upload preserved; fixtures are explicit, not real process-kill claims",
+      "seconds": "10.321"
+    },
+    {
+      "name": "persistent upload rate limit",
+      "status": "PASS",
+      "detail": "30 attempts/account/min including rejected bodies persist in MySQL;31st429+Retry-After",
+      "seconds": "1.377"
+    }
+  ],
+  "passed_check_count": 14,
+  "jar_sha256": "f6d70e742ff89194479aae2088e81f93765ca9a85be34d57435c1a3fd28daea0",
+  "migration_sha256": {
+    "V1__task02_baseline_schema.sql": "94026f8cbc5f61ef5bb38f76aae95cb6bd268107c3dd856b814a054a06a026b4",
+    "V2__task02_base_seed.sql": "fdbaf35cf4d01ce00b6edb1925e9b33b7feb673534307c65340d71a0bd2bf542",
+    "V3__task02_runtime_grants.sql": "9fb70d3dee5fbc6561d2ababf9ef2d213d382944a9c5ba185710591dea959bbd",
+    "V4__engineering_file_lifecycle.sql": "b23c43a8bcf6441e23e1a60b6058d95a9331d2e84996fdc58ff5909f3a4450d4",
+    "V5__task06_file_integrity_cleanup.sql": "3219c44278cbc894faf0a1879a7553e61246271c3544ba2f9ba4205510bbbb70"
+  },
+  "mysql_image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+  "http_requests": 152,
+  "success_envelopes_checked": 84,
+  "application_starts": 2,
+  "jvm_timezone": "Asia/Shanghai",
+  "runtime_database_account": "approval_app",
+  "credentials_recorded": false,
+  "scope": "fixed form validation and private files only; no workflow/formal-row implementation or full T acceptance"
+}

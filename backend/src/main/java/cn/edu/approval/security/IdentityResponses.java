@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -16,7 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
     basePackages = {
       "cn.edu.approval.security",
       "cn.edu.approval.organization",
-      "cn.edu.approval.application"
+      "cn.edu.approval.application",
+      "cn.edu.approval.file"
     })
 @Profile("db & !migrate")
 public class IdentityResponses implements ResponseBodyAdvice<Object> {
@@ -29,10 +31,12 @@ public class IdentityResponses implements ResponseBodyAdvice<Object> {
   @Override
   public boolean supports(
       MethodParameter method, Class<? extends HttpMessageConverter<?>> converter) {
+    if (method.hasMethodAnnotation(ExceptionHandler.class)) return false;
     String name = method.getContainingClass().getPackageName();
     return method.getContainingClass() == IdentityController.class
         || name.equals("cn.edu.approval.organization")
-        || name.equals("cn.edu.approval.application");
+        || name.equals("cn.edu.approval.application")
+        || name.equals("cn.edu.approval.file");
   }
 
   @Override

@@ -71,7 +71,9 @@ final class IdentityRequestFilter extends OncePerRequestFilter {
               || request.getMethod().equals("HEAD")
               || request.getMethod().equals("OPTIONS"));
       if (write && !nativeAnonymous && authorization == null) web.verify(request, sid);
-      if (write) {
+      // Uploads are streamed by the file module after authentication, never buffered as JSON.
+      boolean upload = path.equals("/api/v1/files") && request.getMethod().equals("POST");
+      if (write && !upload) {
         if (request.getContentLengthLong() > MAX_JSON)
           throw new AuthFailure(413, "BODY_TOO_LARGE", 0);
         byte[] body = request.getInputStream().readNBytes(MAX_JSON + 1);
@@ -81,7 +83,9 @@ final class IdentityRequestFilter extends OncePerRequestFilter {
       boolean businessRoute =
           path.startsWith("/api/v1/admin/")
               || path.equals("/api/v1/applications")
-              || path.startsWith("/api/v1/applications/");
+              || path.startsWith("/api/v1/applications/")
+              || path.equals("/api/v1/files")
+              || path.startsWith("/api/v1/files/");
       boolean protectedRoute =
           businessRoute
               || path.equals("/api/v1/auth/me")
