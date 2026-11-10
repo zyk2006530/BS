@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /** Identity response contract; the existing skeleton health endpoint is deliberately unchanged. */
-@RestControllerAdvice(assignableTypes = IdentityController.class)
+@RestControllerAdvice(
+    basePackages = {
+      "cn.edu.approval.security",
+      "cn.edu.approval.organization",
+      "cn.edu.approval.application"
+    })
 @Profile("db & !migrate")
 public class IdentityResponses implements ResponseBodyAdvice<Object> {
   private final Clock clock;
@@ -24,7 +29,10 @@ public class IdentityResponses implements ResponseBodyAdvice<Object> {
   @Override
   public boolean supports(
       MethodParameter method, Class<? extends HttpMessageConverter<?>> converter) {
-    return method.getContainingClass() == IdentityController.class;
+    String name = method.getContainingClass().getPackageName();
+    return method.getContainingClass() == IdentityController.class
+        || name.equals("cn.edu.approval.organization")
+        || name.equals("cn.edu.approval.application");
   }
 
   @Override

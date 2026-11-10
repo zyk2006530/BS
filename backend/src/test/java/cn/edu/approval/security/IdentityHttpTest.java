@@ -86,6 +86,25 @@ class IdentityHttpTest {
   }
 
   @Test
+  void businessRoutesRequireAuthenticatedActiveAccountAndForcedPasswordCannotBypass()
+      throws Exception {
+    for (String path :
+        new String[] {"/api/v1/admin/config", "/api/v1/applications", "/api/v1/applications/1"}) {
+      mvc.perform(get(path)).andExpect(status().isUnauthorized());
+      mvc.perform(get(path).header("Authorization", "Bearer " + TOKEN))
+          .andExpect(status().isForbidden())
+          .andExpect(jsonPath("code").value("ACCOUNT_NOT_ACTIVE"));
+      when(service.authenticate(TOKEN, "MINI_PROGRAM"))
+          .thenReturn(new AuthPrincipal("1", "2", "ACTIVE", true, "MINI_PROGRAM"));
+      mvc.perform(get(path).header("Authorization", "Bearer " + TOKEN))
+          .andExpect(status().isForbidden())
+          .andExpect(jsonPath("code").value("PASSWORD_CHANGE_REQUIRED"));
+      when(service.authenticate(TOKEN, "MINI_PROGRAM"))
+          .thenReturn(new AuthPrincipal("1", "2", "PENDING", false, "MINI_PROGRAM"));
+    }
+  }
+
+  @Test
   void anonymousWebLoginAndRegistrationRequireOriginAndBoundProof() throws Exception {
     var context = context();
     Cookie cookie = context.getResponse().getCookie("csrf_ctx");
@@ -203,7 +222,7 @@ class IdentityHttpTest {
     mvc.perform(get("/api/v1/profile").header("Authorization", "Bearer " + TOKEN))
         .andExpect(status().isOk());
     mvc.perform(get("/api/v1/applications").header("Authorization", "Bearer " + TOKEN))
-        .andExpect(status().isUnauthorized());
+        .andExpect(status().isForbidden());
     when(service.authenticate(TOKEN, "MINI_PROGRAM"))
         .thenReturn(new AuthPrincipal("1", "2", "ACTIVE", true, "MINI_PROGRAM"));
     mvc.perform(get("/api/v1/profile").header("Authorization", "Bearer " + TOKEN))

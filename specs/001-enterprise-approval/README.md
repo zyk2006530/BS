@@ -31,7 +31,7 @@
 
 ## 当前状态与检查范围
 
-`TASK-00`、`TASK-02`、`TASK-03` 已完成；`TASK-01` 为 `in_progress`，其未满足条件见 [TASK-01 记录](<task-01-validation.md>)。TASK-02 基础迁移保留[历史记录](<task-02-validation.md>)，V4 文件生命周期的空库、旧库升级和约束门禁已另行验证，见[工程增量记录](<engineering-validation.md>)；没有改动 V1—V3。TASK-03 身份后端完成26项Java/HTTP测试与11组真实MySQL成品验证，见[身份验证记录](<task03-validation.md>)。TASK-04—TASK-15 仍为 `planned`，T01—T22 保持 `NOT_RUN`。这些局部完成不代表 UI、管理 API、审批闭环、真机、生产 HTTPS、性能或整体备份恢复已经验收。
+`TASK-00`、`TASK-02`、`TASK-03`、`TASK-04`、`TASK-05` 已完成；`TASK-01` 为 `in_progress`，其未满足条件见 [TASK-01 记录](<task-01-validation.md>)。TASK-02 基础迁移保留[历史记录](<task-02-validation.md>)，V4 文件生命周期的空库、旧库升级和约束门禁已另行验证，见[工程增量记录](<engineering-validation.md>)；没有改动 V1—V3。TASK-03 身份后端的历史26项Java/HTTP测试与11组真实MySQL验证见[身份验证记录](<task03-validation.md>)。本轮 TASK-04/05 组织授权及公共草稿完成72项Java/HTTP回归与11组真实MySQL验证，见[本轮记录](<task0405-validation.md>)、[管理接口](<organization-api.md>)和[草稿公共写协议](<draft-write-protocol.md>)。TASK-06—TASK-15 仍为 `planned`，T01—T22 保持 `NOT_RUN`。这些局部完成不代表 UI、附件 API、正式业务正文、审批闭环、真机、生产 HTTPS、性能或整体备份恢复已经验收；学生模板/流程模块未生成实现。
 
 检查器只保证本轮受管文档的 PDF 指纹、编号覆盖、依赖无环、状态、证据路径和本地链接一致，不证明规格内容全面正确，更不执行业务验收。它不会递归校验历史材料中的仓库外课件或旧交付链接。通过 `--source-pdf` 可以额外核对用户指定的外部原件；不指定时只核对仓库副本，便于克隆后运行。
 

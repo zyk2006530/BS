@@ -86,6 +86,43 @@ class AuthServiceTest {
   }
 
   @Test
+  void permissionSummarySeparatesAdministrationFromIndependentDataAbilities() {
+    when(jdbc.queryForList(contains("SELECT r.code"), eq(String.class), any(Object[].class)))
+        .thenReturn(List.of("SYS_ADMIN", "FINANCE_APPROVER"));
+    when(jdbc.queryForList(
+            contains("SELECT DISTINCT ability"), eq(String.class), any(Object[].class)))
+        .thenReturn(List.of("STATISTICS"));
+    Object summary = service.profile(principal).get("permissions");
+    assertEquals(
+        Map.of(
+            "roles",
+            List.of("SYS_ADMIN", "FINANCE_APPROVER"),
+            "canManage",
+            true,
+            "canCreateDraft",
+            true,
+            "hasBodyScope",
+            false,
+            "hasStatisticsScope",
+            true),
+        summary);
+    user.put("must_change_password", 1);
+    assertEquals(
+        Map.of(
+            "roles",
+            List.of(),
+            "canManage",
+            false,
+            "canCreateDraft",
+            false,
+            "hasBodyScope",
+            false,
+            "hasStatisticsScope",
+            false),
+        service.profile(principal).get("permissions"));
+  }
+
+  @Test
   void utcDateTimeStringsAreIndependentOfJvmDefaultZone() {
     session.put("last_seen_at", "2026-11-10T05:59:00.000000");
     session.put("absolute_expires_at", "2026-11-10T07:00:00.000000");

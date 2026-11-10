@@ -1,0 +1,92 @@
+{
+  "task": "TASK-04/05",
+  "generated_at": "2026-11-10T08:16:05.475574+00:00",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "name": "isolated startup and bootstrap",
+      "status": "PASS",
+      "detail": "fresh migration; only four initial users/roles bootstrapped in SQL; real app uses least-privilege runtime account",
+      "seconds": "14.635"
+    },
+    {
+      "name": "audited confirmation and rejection",
+      "status": "PASS",
+      "detail": "confirm/reject through management API persist status/department/employee role, append readable credential-free audits, filter pagination and enforce admin/stale versions",
+      "seconds": "2.311"
+    },
+    {
+      "name": "departments roles and last administrator",
+      "status": "PASS",
+      "detail": "department creation/rename/manager eligibility and responsibility protection; role diff audit and last-enabled-admin guard",
+      "seconds": "2.342"
+    },
+    {
+      "name": "configuration version race",
+      "status": "PASS",
+      "detail": "two administrators using same object/config versions serialize to one200 and one409, exactly one configuration increment",
+      "seconds": "0.219"
+    },
+    {
+      "name": "draft idempotency versions and visibility",
+      "status": "PASS",
+      "detail": "same-key concurrent creation replays one big-string ID; fingerprints isolate body/target; versions, unknown payload, client keys and owner-only counts enforced",
+      "seconds": "1.298"
+    },
+    {
+      "name": "fixed draft dates and UTC travel payload",
+      "status": "PASS",
+      "detail": "valid TRAVEL explicit UTC-Z payload survives save; offset/non-time/impossible-date timestamps and impossible purchase dates are rejected400",
+      "seconds": "0.174"
+    },
+    {
+      "name": "grant scope expiry and body separation",
+      "status": "PASS",
+      "detail": "generic submitted-fixture body reads separate SYS_ADMIN/STATISTICS from READ_BODY; scope, expiry and revocation filter reads; drafts remain private",
+      "seconds": "2.178"
+    },
+    {
+      "name": "administrative password reset and disable",
+      "status": "PASS",
+      "detail": "management reset revokes previous sessions and forces password change; API disable revokes active sessions",
+      "seconds": "1.090"
+    },
+    {
+      "name": "audit and idempotency-result atomic rollback",
+      "status": "PASS",
+      "detail": "audit failure rolls back management object/config; success-result insert failure rolls back draft and same request key recovers",
+      "seconds": "1.522"
+    },
+    {
+      "name": "delete replay and shared-file cleanup",
+      "status": "PASS",
+      "detail": "DELETE after-gone same-key replay remains204; payload/bindings removed atomically, shared file stays READY and cleanup candidates never delete bytes here",
+      "seconds": "1.705"
+    },
+    {
+      "name": "lock-time revalidation timeout and recovery",
+      "status": "PASS",
+      "detail": "administrator revoked while waiting config lock is denied after lock; 3s wait timeout503 is retryable and post-release API recovers",
+      "seconds": "9.379"
+    }
+  ],
+  "passed_check_count": 11,
+  "failed_check_count": 0,
+  "jar_sha256": "5b4d63d18a28c7d9a7d33e8fc54127a62e4817f15fbd1b92e403f68a021fa410",
+  "jar_execution": "one frozen private copy; no Maven during verification",
+  "migration_sha256": {
+    "V1__task02_baseline_schema.sql": "94026f8cbc5f61ef5bb38f76aae95cb6bd268107c3dd856b814a054a06a026b4",
+    "V2__task02_base_seed.sql": "fdbaf35cf4d01ce00b6edb1925e9b33b7feb673534307c65340d71a0bd2bf542",
+    "V3__task02_runtime_grants.sql": "9fb70d3dee5fbc6561d2ababf9ef2d213d382944a9c5ba185710591dea959bbd",
+    "V4__engineering_file_lifecycle.sql": "b23c43a8bcf6441e23e1a60b6058d95a9331d2e84996fdc58ff5909f3a4450d4"
+  },
+  "mysql_image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+  "http_requests": 134,
+  "application_starts": 1,
+  "success_envelopes_checked": 83,
+  "jvm_timezone": "Asia/Shanghai",
+  "runtime_database_account": "approval_app",
+  "runtime_flyway_enabled": false,
+  "scope": "TASK04/05 API+SQL blackbox; isolated bootstrap/fault/file/submitted-read fixtures; no workflow/template execution or full T acceptance",
+  "credentials_recorded": false
+}

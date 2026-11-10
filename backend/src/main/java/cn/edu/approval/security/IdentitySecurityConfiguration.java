@@ -29,6 +29,10 @@ public class IdentitySecurityConfiguration {
               textual.setCoercion(CoercionInputShape.Integer, CoercionAction.Fail);
               textual.setCoercion(CoercionInputShape.Float, CoercionAction.Fail);
               textual.setCoercion(CoercionInputShape.Boolean, CoercionAction.Fail);
+              var bool = mapper.coercionConfigFor(LogicalType.Boolean);
+              bool.setCoercion(CoercionInputShape.String, CoercionAction.Fail);
+              bool.setCoercion(CoercionInputShape.Integer, CoercionAction.Fail);
+              bool.setCoercion(CoercionInputShape.Float, CoercionAction.Fail);
             });
   }
 
@@ -79,6 +83,9 @@ public class IdentitySecurityConfiguration {
                         "/api/v1/profile/confirmation-request")
                     .permitAll()
                     .requestMatchers(org.springframework.http.HttpMethod.PATCH, "/api/v1/profile")
+                    .permitAll()
+                    .requestMatchers(
+                        "/api/v1/admin/**", "/api/v1/applications", "/api/v1/applications/**")
                     .permitAll()
                     .anyRequest()
                     .denyAll())

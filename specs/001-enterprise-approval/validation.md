@@ -35,4 +35,4 @@ git diff --check
 
 ## 未执行项与下一步
 
-TASK-03 身份后端已完成，执行结果独立记录在 [TASK-03 验证记录](<task03-validation.md>)；TASK-04—TASK-15 待实施。TASK-01 仍为 `in_progress`，其微信云端/体验成员/真机与 SMTP 条件未满足；TASK-02 已完成数据库基线及 V4 工程增量，但审批流程、整体 Compose 和 T01—T22 跨任务验收仍未完成。TASK-09、TASK-10 是本人独立编码边界。Java/Maven、Docker 与 MySQL 8.4.7 已用于后端验证；小程序主体/AppID/合法域名/HTTPS、体验成员、真机与 SMTP 仍需后续确认。后续按[任务列表](<tasks.md>)继续组织授权与公共草稿，不将本记录的历史 PASS 转写为整体验收完成。
+TASK-03 身份后端已完成，历史执行结果独立记录在 [TASK-03 验证记录](<task03-validation.md>)；TASK-04/05 组织授权和公共草稿也已完成，当前72项Java/HTTP回归与11组真实MySQL验证见[本轮记录](<task0405-validation.md>)。TASK-06—TASK-15 待实施。TASK-01 仍为 `in_progress`，其微信云端/体验成员/真机与 SMTP 条件未满足；TASK-02 已完成数据库基线及 V4 工程增量，但审批流程、整体 Compose 和 T01—T22 跨任务验收仍未完成。TASK-09、TASK-10 是本人独立编码边界。Java/Maven、Docker 与 MySQL 8.4.7 已用于后端验证；小程序主体/AppID/合法域名/HTTPS、体验成员、真机与 SMTP 仍需后续确认。后续按[任务列表](<tasks.md>)继续附件及固定业务模块，不将本记录的历史 PASS 转写为整体验收完成。

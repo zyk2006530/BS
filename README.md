@@ -1,6 +1,6 @@
 # 企业审批系统
 
-《BS 体系软件设计》课程项目。已完成 **TASK-02 数据库迁移、工程增量验证与 TASK-03 身份会话后端**：18 张基础表、幂等种子、账号最小权限、文件状态 V4 兼容迁移，以及注册/登录、持久会话、CSRF、限流和资料安全；真实 MySQL 8.4.7 验证见各任务记录。同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无审批 API 和流程执行，不能据此声称完整业务可用。
+《BS 体系软件设计》课程项目。已实现 **TASK-02 数据库迁移和工程增量、TASK-03 身份会话、TASK-04 组织角色与独立授权、TASK-05 草稿查询及公共版本协议后端**：基础数据库和最小权限、注册/登录与安全会话、带审计和双版本的管理接口、固定类型草稿及幂等写入。同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无提交/审批执行或业务 UI，局部验证不能代表完整业务可用。
 
 ## 从这里开始
 
@@ -17,6 +17,9 @@
 | [TASK-02 验证记录](<specs/001-enterprise-approval/task-02-validation.md>) | 18 张基础表、真实 MySQL 约束/权限、演示数据与生产分离证据 |
 | [工程增量验证](<specs/001-enterprise-approval/engineering-validation.md>) | V3→V4 状态兼容、空库、约束与 checksum 防篡改 |
 | [TASK-03 验证记录](<specs/001-enterprise-approval/task03-validation.md>) | 身份会话 API、凭据安全、并发限流及真实数据库证据 |
+| [TASK-04/05 验证记录](<specs/001-enterprise-approval/task0405-validation.md>) | 组织授权、固定草稿、幂等和事务验证及尚未集成的边界 |
+| [组织管理 API](<specs/001-enterprise-approval/organization-api.md>) | 双版本管理、负责人关系、范围授权及审计契约 |
+| [草稿公共写协议](<specs/001-enterprise-approval/draft-write-protocol.md>) | 字段、行键、幂等重试及两端同单版本写队列 |
 
 ## 最新设计的关键选择
 
@@ -61,6 +64,6 @@ Java 17/Maven 已提供工作区局部配置；真实 MySQL 8.4.7 迁移、账�
 ./backend/mvnw.cmd -f backend/pom.xml spring-boot:run
 ```
 
-不启用 profile 时仅提供 `GET http://127.0.0.1:8080/api/v1/health`，返回 `status=UP`、`stage=SKELETON`、`businessReady=false`。启用 `db` profile、注入运行账号数据库连接与CSRF密钥后提供 TASK-03 身份/资料 API；具体协议及启动命令见[后端说明](<backend/README.md>)。审批及组织管理端点仍未开放。
+不启用 profile 时仅提供 `GET http://127.0.0.1:8080/api/v1/health`，返回 `status=UP`、`stage=SKELETON`、`businessReady=false`。启用 `db` profile、注入运行账号数据库连接与 CSRF 密钥后提供身份/资料、组织角色与独立授权、固定类型草稿和授权查询 API；具体协议及启动命令见[后端说明](<backend/README.md>)。提交、审批、流程执行及业务页面尚未开放。
 
 在另一个终端进入对应客户端目录，分别执行 `npm ci`、`npm run check`、`npm run build`。使用方式与版本说明见[后端](<backend/README.md>)、[桌面端](<web/README.md>)、[微信小程序](<mobile/README.md>)。Compose 只供本机开发，需先生成 jar 与 Web dist；命令和未验证项见[部署说明](<deploy/README.md>)。

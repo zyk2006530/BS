@@ -25,7 +25,12 @@ public class IdentityErrors {
     ApiErrors.write(response, mapper, ex.status(), ex.code(), ex.retryAfter());
   }
 
-  @ExceptionHandler({HttpMessageNotReadableException.class, IllegalArgumentException.class})
+  @ExceptionHandler({
+    HttpMessageNotReadableException.class,
+    IllegalArgumentException.class,
+    org.springframework.web.bind.MissingRequestValueException.class,
+    org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class
+  })
   void invalid(Exception ex, HttpServletResponse response) throws IOException {
     ApiErrors.write(response, mapper, 400, "INVALID_REQUEST", 0);
   }

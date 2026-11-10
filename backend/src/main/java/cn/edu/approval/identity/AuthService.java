@@ -166,15 +166,13 @@ public class AuthService {
                         "DELETE FROM rate_limit_bucket WHERE bucket_key=? AND window_start=?",
                         bucket.key(),
                         stamp(bucket.start()));
-                    return Map.of(
-                        "token",
-                        token,
-                        "userId",
-                        userId,
-                        "status",
-                        user.get("status"),
-                        "mustChangePassword",
-                        truth(user.get("must_change_password")));
+                    Map<String, Object> loginResult = new LinkedHashMap<>();
+                    loginResult.put("token", token);
+                    loginResult.put("userId", userId);
+                    loginResult.put("status", user.get("status"));
+                    loginResult.put("mustChangePassword", truth(user.get("must_change_password")));
+                    loginResult.put("permissions", permissionSummary(user));
+                    return loginResult;
                   });
           if (result instanceof AuthFailure failure) throw failure;
           @SuppressWarnings("unchecked")
@@ -426,7 +424,53 @@ public class AuthService {
           "configVersion",
           jdbc.queryForObject(
               "SELECT CAST(row_version AS CHAR) FROM system_config WHERE id=1", String.class));
+    result.put("permissions", permissionSummary(user));
     return result;
+  }
+
+  private Map<String, Object> permissionSummary(Map<String, Object> user) {
+    if (!"ACTIVE".equals(user.get("status")) || truth(user.get("must_change_password")))
+      return Map.of(
+          "roles",
+          List.of(),
+          "canManage",
+          false,
+          "canCreateDraft",
+          false,
+          "hasBodyScope",
+          false,
+          "hasStatisticsScope",
+          false);
+    String userId = user.get("id").toString();
+    List<String> roles =
+        jdbc.queryForList(
+            "SELECT r.code FROM user_role ur JOIN role r ON r.id=ur.role_id WHERE ur.user_id=? ORDER BY r.code",
+            String.class,
+            userId);
+    Long managerCount =
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM department WHERE enabled=1 AND manager_user_id=?",
+            Long.class,
+            userId);
+    boolean manager = managerCount != null && managerCount > 0;
+    List<String> abilities =
+        jdbc.queryForList(
+            "SELECT DISTINCT ability FROM data_grant WHERE user_id=? AND revoked_at IS NULL AND valid_from<=? AND valid_until>?",
+            String.class,
+            userId,
+            stamp(clock.instant()),
+            stamp(clock.instant()));
+    return Map.of(
+        "roles",
+        roles,
+        "canManage",
+        roles.contains("SYS_ADMIN"),
+        "canCreateDraft",
+        true,
+        "hasBodyScope",
+        manager || abilities.contains("READ_BODY"),
+        "hasStatisticsScope",
+        manager || abilities.contains("STATISTICS"));
   }
 
   private void enabledDepartment(String department) {

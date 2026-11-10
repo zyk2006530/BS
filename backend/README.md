@@ -1,13 +1,13 @@
 # Backend
 
-Java 17.0.17+10、Maven 3.9.11、Spring Boot 3.5.7。默认启动仍是封闭骨架；显式启用 `db` 且未启用 `migrate` 时加载 TASK-03 身份服务与 HTTP 入口。代码已实现不等于验收通过，当前测试执行及 MySQL 证据以 [TASK-03 验证记录](<../specs/001-enterprise-approval/task03-validation.md>) 为准。
+Java 17.0.17+10、Maven 3.9.11、Spring Boot 3.5.7。默认启动仍是封闭骨架；显式启用 `db` 且未启用 `migrate` 时加载身份、组织管理及草稿查询服务。身份历史证据见 [TASK-03 验证记录](<../specs/001-enterprise-approval/task03-validation.md>)；TASK-04/05 的公共写协议见[草稿版本与重试协议](<../specs/001-enterprise-approval/draft-write-protocol.md>)。
 
 ## 启动模式
 
 | profile | 行为 |
 | --- | --- |
 | 默认 | 不加载数据库；仅健康入口开放，其余入口拒绝 |
-| `db` | 连接 MySQL、执行 Flyway、加载持久身份服务及身份 HTTP 入口 |
+| `db` | 连接 MySQL，加载身份、组织管理和草稿查询入口；常驻进程须显式关闭 Flyway |
 | `db,migrate` | 迁移用途；不加载 TASK-03 身份服务和控制器，迁移流程结束退出 |
 | `db,demo` | 额外运行独立演示种子，须显式提供 `APP_DEMO_PASSWORD`；不用于生产 |
 
@@ -41,9 +41,11 @@ Hikari 为每条连接设置 `innodb_lock_wait_timeout=3`，连接池获取超�
 
 Unix：`sh backend/mvnw -f backend/pom.xml -B verify`。Wrapper 下载 Maven 3.9.11 并校验固定 SHA-256；构建需能访问依赖仓库。`verify` 包含工具版本门禁、Spotless、Checkstyle、`-Xlint:all -Werror`、JUnit、HTTP 测试及打包；修正 Java 格式可运行 `spotless:apply`。默认单元与模拟服务 HTTP 测试不证明真实 MySQL 的唯一约束、隔离级别、锁及事务行为。
 
-2026-11-10 最终 `verify` 通过：26 项测试（16项服务、8项身份HTTP、2项骨架HTTP），无失败/错误/跳过，格式、静态检查、编译和打包通过。随后成品在真实 MySQL 8.4.7 上完成11/11组独立身份验证，共133次HTTP请求和2次应用启动，包含并发、回滚、重启、期限和锁超时恢复；原始结果为[身份验证JSON](<evidence/task03-mysql.json>)。
+2026-11-10 16:14:05 +08:00 当前 `verify` 通过：72 项测试，无失败/错误/跳过，格式、静态检查、编译和打包通过。TASK-04/05 成品随后在真实 MySQL 8.4.7 完成 11/11 组验证，共 134 次 HTTP 请求；包含管理权限、配置竞态、草稿幂等、授权隔离、回滚、UTC 和锁超时恢复。完整结果见[本轮验证记录](<../specs/001-enterprise-approval/task0405-validation.md>)和[原始 JSON](<evidence/task0405-mysql.json>)。
 
-[骨架成品冒烟](<../scripts/smoke_backend.py>)使用默认profile；[TASK-02脚本](<../scripts/verify_task02_mysql.py>)验证迁移与基础数据。身份服务另用[独立成品验证脚本](<../scripts/verify_task03_mysql.py>)，构建后执行 `python scripts/verify_task03_mysql.py --skip-build`。完整环境、命令、结果及未覆盖项见[TASK-03记录](<../specs/001-enterprise-approval/task03-validation.md>)。
+TASK-03 的历史身份验证独立保留：当时 26 项 Java/HTTP 测试，成品实库 11/11 组、133 次 HTTP 请求、2 次应用启动，包含限流重启与会话期限；原始结果为[身份验证 JSON](<evidence/task03-mysql.json>)，不以本轮记录覆盖。
+
+[骨架成品冒烟](<../scripts/smoke_backend.py>)使用默认profile；[TASK-02脚本](<../scripts/verify_task02_mysql.py>)验证迁移与基础数据。身份服务另用[独立成品验证脚本](<../scripts/verify_task03_mysql.py>)，构建后执行 `python scripts/verify_task03_mysql.py --skip-build`。组织/草稿使用[本轮成品脚本](<../scripts/verify_task0405_mysql.py>)，构建后执行 `python scripts/verify_task0405_mysql.py --skip-build`。完整环境、命令、结果及未覆盖项见[TASK-03记录](<../specs/001-enterprise-approval/task03-validation.md>)和[TASK-04/05记录](<../specs/001-enterprise-approval/task0405-validation.md>)。
 
 ## TASK-03 已落地边界
 
@@ -57,11 +59,11 @@ Unix：`sh backend/mvnw -f backend/pom.xml -B verify`。Wrapper 下载 Maven 3.9
 - IP 登录 20 次/分钟、注册 10 次/分钟；账号每 15 分钟 5 次失败。计数使用 MySQL SHA-256 桶键及原子行锁，当前为固定时间窗口；第 5 次错误仍返回 401，后续返回 429 及 `Retry-After`，成功登录清除账号当前窗口失败数。失败计数在独立事务提交后才抛出业务异常，不能随错误响应回滚。
 - 公共服务入口将数据库及事务失败转为脱敏 503，不携带原始异常 cause，也不记录凭据。
 
-内部 `resetPassword`、`disable` hook 仅包内可见，要求已有实际事务，并撤销全部会话。它们不是 TASK-04 管理 API；调用方仍须在同一事务完成配置锁、管理员及对象版本检查、最后管理员和引用检查、审计等条件。账户确认、拒绝、角色和组织管理尚不属于本次交付。
+内部 `resetPassword`、`disable` hook 仅包内可见，要求已有实际事务。TASK-04 的管理 API 由独立组织服务完成配置锁、管理员和对象版本检查、最后管理员及引用检查、审计和撤会话；不把内部 hook 暴露为绕过管理约束的接口。
 
 ## 身份 HTTP 契约
 
-所有路径前缀为 `/api/v1`。非空成功响应按 `data,requestId,serverTime` 封装，下表描述 `data` 中的载荷；204 无响应体，健康骨架响应保持不变。登录尚无角色权限摘要。
+所有路径前缀为 `/api/v1`。非空成功响应按 `data,requestId,serverTime` 封装，下表描述 `data` 中的载荷；204 无响应体，健康骨架响应保持不变。登录及本人资料的 `permissions` 返回当前角色与管理/草稿/正文范围/统计范围提示；摘要不是授权凭据，正文与统计范围不由管理员或财务角色推导。
 
 | 方法与路径 | 输入或行为 |
 | --- | --- |
@@ -75,7 +77,7 @@ Unix：`sh backend/mvnw -f backend/pom.xml -B verify`。Wrapper 下载 Maven 3.9
 | `POST /profile/password` | `oldPassword,newPassword`；撤全并重新登录；204 |
 | `POST /profile/confirmation-request` | 仅拒绝账户；`requestedDepartmentId,expectedVersion,expectedConfigVersion`；配置锁后重新验证，回 `rowVersion,configVersion` |
 
-服务接口保留三参数 `updateProfile(p,name,email)` 但恒拒绝 400；HTTP 使用四参数版本重载，不允许缺失版本绕过并发保护。ID 与版本输出十进制字符串。登录输出不包含角色摘要；管理员启用及组织分配须等 TASK-04。
+服务接口保留三参数 `updateProfile(p,name,email)` 但恒拒绝 400；HTTP 使用四参数版本重载，不允许缺失版本绕过并发保护。ID 与版本输出十进制字符串。角色、组织及管理变更入口见下文；`permissions` 仅作界面提示，访问时仍查询当前持久化权限。
 
 Web 登录只设置 `sid` Cookie，不向体暴露会话令牌；Cookie 为 Path=/、无 Domain、HttpOnly、SameSite=Lax，生产 Secure。Cookie 写请求（含匿名注册、登录和退出）要求可信 Origin 与 `X-CSRF-Token`；登录成功轮换签名上下文。原生匿名入口不接受 Cookie 或 Authorization，后续只支持无 Cookie 的 Bearer；同时携带 Cookie 与 Authorization 拒绝。客户端类型由入口和凭据位置决定，不接受请求体自报。响应设置 `no-store`，错误含追踪信息且不暴露 SQL、令牌或内部路径。
 
@@ -94,4 +96,21 @@ Web 登录只设置 `sid` Cookie，不向体暴露会话令牌；Cookie 为 Path
 | Enforcer / compiler / Surefire | 3.6.2 / 3.14.1 / 3.5.4 | 工具约束、编译、测试 | Apache-2.0 |
 | Azul Zulu OpenJDK（本地验证） | 17.62.17 / Java 17.0.17+10 | 本地运行时 | GPL-2.0 with Classpath Exception |
 
-TASK-02 历史验证见 [TASK-02 记录](<../specs/001-enterprise-approval/task-02-validation.md>)。MyBatis-Plus 尚未引入，本次直接采用 JDBC，未新增依赖。未实现 UI、TASK-04 管理能力或申请业务；TASK-09/TASK-10 模板与流程执行继续保持学生独立编码边界。
+TASK-02 历史验证见 [TASK-02 记录](<../specs/001-enterprise-approval/task-02-validation.md>)。MyBatis-Plus 尚未引入，本次直接采用 JDBC，未新增依赖。尚未实现业务 UI、提交、正式扩展正文、附件 HTTP 接口或统计 API；TASK-09/TASK-10 模板与流程执行继续保持学生独立编码边界。
+
+## TASK-04 组织与权限管理
+
+管理入口统一为 `/api/v1/admin`：读取 `config`、`users`、`departments`、`grants`、`audit-records`；用户确认/拒绝、启停或调部门、角色替换、密码重置；部门创建/修改与负责人同步；READ_BODY、STATISTICS 独立范围授权及历史撤销。详见[管理 API](<../specs/001-enterprise-approval/organization-api.md>)。
+
+写操作都要求非空 `reason` 和 `expectedConfigVersion`，修改已有用户或部门另带 `expectedVersion`。配置锁之后重新检查当前管理员、用户和会话；业务、版本递增与审计同事务。最后启用管理员不能停用或移除管理员角色。负责人必须是同部门已确认用户；角色与负责人关系必须一致。密码重置/停用撤销全部会话，审计不写临时密码或哈希。管理员不因此获得他人正文或统计范围。
+
+当前责任检查只支持已落地的数据：存在启用策略指针或在审申请而无法证明无流程引用时，阻止涉及责任人的危险调整，返回 409 `RESPONSIBILITY_CHECK_UNAVAILABLE`，不绕过检查，也不虚构 TASK-09 学生模块。
+
+## TASK-05 草稿与查询
+
+- `POST /api/v1/applications`：创建固定类型草稿，201；CUSTOM 及正式源单复制目前明确返回不可用，不写半成品。
+- `GET /api/v1/applications`、`GET /api/v1/applications/{id}`：本人/当前授权查询，先授权再计数分页；他人草稿不可见。正式正文未集成时返回基础元数据与 `bodyAvailable=false`。
+- `PUT /api/v1/applications/{id}/draft`：`expectedVersion,title,remark,payload`，完整替换草稿；允许未填完整，但出现的字段必须符合固定语法。
+- `DELETE /api/v1/applications/{id}`：JSON 正文 `expectedVersion`，成功 204。
+
+创建、保存、删除必须带 UUID `Idempotency-Key`。相同成功请求可重放，异内容/异目标冲突 409；权限检查先于历史重放，重放先于旧版本检查。金额、ID、版本均为字符串。稳定行键、附件解绑与清理候选、客户端串行写队列及重试规则见[公共写协议](<../specs/001-enterprise-approval/draft-write-protocol.md>)。目前不提供附件物理删除或前端队列实现。

@@ -78,8 +78,13 @@ final class IdentityRequestFilter extends OncePerRequestFilter {
         if (body.length > MAX_JSON) throw new AuthFailure(413, "BODY_TOO_LARGE", 0);
         request = new BufferedRequest(request, body);
       }
+      boolean businessRoute =
+          path.startsWith("/api/v1/admin/")
+              || path.equals("/api/v1/applications")
+              || path.startsWith("/api/v1/applications/");
       boolean protectedRoute =
-          path.equals("/api/v1/auth/me")
+          businessRoute
+              || path.equals("/api/v1/auth/me")
               || path.equals("/api/v1/profile")
               || path.startsWith("/api/v1/profile/");
       if (protectedRoute) {
@@ -89,6 +94,9 @@ final class IdentityRequestFilter extends OncePerRequestFilter {
             && !path.equals("/api/v1/auth/me")
             && !path.equals("/api/v1/profile/password")) {
           throw new AuthFailure(403, "PASSWORD_CHANGE_REQUIRED", 0);
+        }
+        if (businessRoute && !"ACTIVE".equals(principal.status())) {
+          throw new AuthFailure(403, "ACCOUNT_NOT_ACTIVE", 0);
         }
         request.setAttribute("identity", principal);
       }
