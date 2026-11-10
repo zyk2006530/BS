@@ -1,0 +1,51 @@
+{
+  "name": "approval-skeleton-dev",
+  "services": {
+    "frontend": {
+      "image": "approval-frontend:0.1.0-skeleton",
+      "build": {"context": "..", "dockerfile": "deploy/frontend.Dockerfile"},
+      "ports": ["127.0.0.1:8088:80"],
+      "depends_on": {"backend": {"condition": "service_healthy"}},
+      "networks": ["app"],
+      "restart": "unless-stopped"
+    },
+    "backend": {
+      "image": "approval-backend:0.1.0-skeleton",
+      "build": {"context": "..", "dockerfile": "deploy/backend.Dockerfile"},
+      "environment": {
+        "SERVER_PORT": "8080",
+        "DB_URL": "jdbc:mysql://mysql:3306/approval?connectionTimeZone=UTC",
+        "DB_USERNAME": "${MYSQL_APP_USER:?Set a non-root MYSQL_APP_USER in deploy/.env}",
+        "DB_PASSWORD": "${MYSQL_APP_PASSWORD:?Set MYSQL_APP_PASSWORD in deploy/.env}",
+        "APP_UPLOAD_DIR": "/var/lib/approval/uploads"
+      },
+      "volumes": ["uploads:/var/lib/approval/uploads"],
+      "depends_on": {"mysql": {"condition": "service_healthy"}},
+      "healthcheck": {
+        "test": ["CMD", "java", "/opt/approval/HealthProbe.java"],
+        "interval": "30s", "timeout": "10s", "start_period": "30s", "retries": 3
+      },
+      "networks": ["app", "data"],
+      "restart": "unless-stopped"
+    },
+    "mysql": {
+      "image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+      "environment": {
+        "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in deploy/.env}",
+        "MYSQL_DATABASE": "approval",
+        "MYSQL_USER": "${MYSQL_APP_USER:?Set a non-root MYSQL_APP_USER in deploy/.env}",
+        "MYSQL_PASSWORD": "${MYSQL_APP_PASSWORD:?Set MYSQL_APP_PASSWORD in deploy/.env}"
+      },
+      "command": ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"],
+      "volumes": ["mysql-data:/var/lib/mysql"],
+      "healthcheck": {
+        "test": ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_ROOT_PASSWORD\" mysqladmin ping --host=127.0.0.1 --user=root --silent"],
+        "interval": "10s", "timeout": "5s", "start_period": "45s", "retries": 10
+      },
+      "networks": ["data"],
+      "restart": "unless-stopped"
+    }
+  },
+  "networks": {"app": {}, "data": {"internal": true}},
+  "volumes": {"mysql-data": {}, "uploads": {}}
+}

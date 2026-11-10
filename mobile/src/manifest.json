@@ -1,0 +1,13 @@
+{
+  "name": "企业审批工程骨架",
+  "appid": "",
+  "description": "TASK-01 仅健康检查，不含业务",
+  "versionName": "0.1.0",
+  "versionCode": "1",
+  "vueVersion": "3",
+  "mp-weixin": {
+    "appid": "wxb911cea6b9583890",
+    "setting": { "urlCheck": true },
+    "usingComponents": true
+  }
+}

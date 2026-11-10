@@ -130,7 +130,7 @@ class SpecificationCheckerTests(unittest.TestCase):
         self.assert_error("heading coverage mismatch")
 
     def test_status_drift(self):
-        self.data["tasks"][1]["status"] = "in_progress"
+        self.data["tasks"][1]["status"] = "planned" if self.data["tasks"][1]["status"] != "planned" else "in_progress"
         self.assert_error("status differs from manifest")
 
     def test_incomplete_document_inventory(self):

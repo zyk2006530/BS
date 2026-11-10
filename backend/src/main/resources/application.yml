@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: approval-backend
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+server:
+  port: 8080
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never

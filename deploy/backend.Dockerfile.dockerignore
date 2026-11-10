@@ -1,0 +1,7 @@
+**
+!backend/
+!backend/target/
+!backend/target/approval-backend-0.1.0-SNAPSHOT.jar
+!deploy/
+!deploy/backend.Dockerfile
+!deploy/HealthProbe.java

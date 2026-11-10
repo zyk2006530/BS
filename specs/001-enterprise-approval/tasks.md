@@ -1,8 +1,8 @@
 # 实施任务与完成条件
 
-本轮仅 `TASK-00` 为 `done`；其余均为 `planned`，不暗示任何业务代码已经存在。机器状态与依赖见[manifest.json](<manifest.json>)。需求定义见[spec.md](<spec.md>)，验收步骤见[acceptance.md](<acceptance.md>)。
+当前 `TASK-00` 为 `done`，`TASK-01` 为 `in_progress`（工程骨架实施中，外部接入条件未验证），其余均为 `planned`。机器状态与依赖见[manifest.json](<manifest.json>)。需求定义见[spec.md](<spec.md>)，验收步骤见[acceptance.md](<acceptance.md>)。
 
-`assisted`：不在课程独立编码范围内，可在规格约束下协助实现；`student_only`：仅学生独立编码，不能由 AI 生成实现或共用执行内核。下列目录名均为拟建，不代表当前存在。
+`assisted`：不在课程独立编码范围内，可在规格约束下协助实现；`student_only`：仅学生独立编码，不能由 AI 生成实现或共用执行内核。下列业务目录为实施边界规划，不代表相应功能已实现；TASK-01 顶层骨架以验证记录为准。
 
 ## TASK-00 规格基线和一致性工具
 
@@ -12,9 +12,10 @@
 
 ## TASK-01 工程骨架和开发环境
 
-- 状态：`planned`；责任：`assisted`；依赖：TASK-00；需求：REQ-12；验收：T15、T21。
-- 拟建：backend、web、mobile、deploy；确定 Spring Boot 3 小版本、依赖和镜像版本，提交前端依赖锁文件，启用格式/静态/单测检查。
+- 状态：`in_progress`；责任：`assisted`；依赖：TASK-00；需求：REQ-12；验收：T15、T21。
+- 交付：backend、web、mobile、deploy 工程骨架及 CI；版本、检查命令、许可证和外部条件见 [TASK-01 验证记录](<task-01-validation.md>)、[开发环境](<../../docs/development-environment.md>)。
 - 完成条件：Java 17/Maven、MySQL 8、Node 与包管理器版本可复现；空目录可构建；仅健康检查无业务不冒称采购可用。确认小程序 AppID、合法域名、HTTPS、体验成员和 SMTP 条件并留实测记录。
+- 尚未满足：Docker/MySQL 容器实测、微信正式云端接入/体验成员/真机及 SMTP 真实收件记录；真实 AppID 已配置且开发者工具模拟器已验证，Docker 引擎已可用。因此不标记 `done`；TASK-02 进入条件调整尚未实施。
 
 ## TASK-02 迁移和最小初始化
 

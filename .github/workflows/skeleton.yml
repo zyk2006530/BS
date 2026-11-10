@@ -1,0 +1,65 @@
+name: TASK-01 skeleton checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  specifications:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12.10'
+      - uses: actions/setup-java@v4.7.1
+        with:
+          distribution: zulu
+          java-version: '17.0.17+10'
+      - run: python scripts/verify_specs.py
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+        env:
+          DEPLOY_JAVA_HOME: ${{ env.JAVA_HOME }}
+
+  backend:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-java@v4.7.1
+        with:
+          distribution: zulu
+          java-version: '17.0.17+10'
+          cache: maven
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: '3.12.10'
+      - name: Verify health-only backend
+        run: sh backend/mvnw -f backend/pom.xml -B -ntp verify
+      - name: Smoke packaged jar on loopback
+        run: python scripts/smoke_backend.py
+
+  clients:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: [web, mobile]
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '24.17.0'
+          cache: npm
+          cache-dependency-path: ${{ matrix.directory }}/package-lock.json
+      - name: Enforce npm version
+        run: test "$(npm --version)" = '11.13.0'
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build

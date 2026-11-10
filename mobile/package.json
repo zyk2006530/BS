@@ -1,0 +1,42 @@
+{
+  "name": "enterprise-approval-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "24.17.0",
+    "npm": "11.13.0"
+  },
+  "packageManager": "npm@11.13.0",
+  "scripts": {
+    "build": "uni build -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --experimental-strip-types --test tests/health.test.ts",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-5030420261029002",
+    "@dcloudio/uni-components": "3.0.0-5030420261029002",
+    "@dcloudio/uni-mp-weixin": "3.0.0-5030420261029002",
+    "vue": "3.4.21"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "3.4.31",
+    "@dcloudio/vite-plugin-uni": "3.0.0-5030420261029002",
+    "@eslint/js": "9.39.4",
+    "@types/node": "24.19.2",
+    "@vue/compiler-sfc": "3.4.21",
+    "eslint": "9.39.4",
+    "eslint-plugin-vue": "10.12.1",
+    "prettier": "3.9.10",
+    "typescript": "5.7.3",
+    "typescript-eslint": "8.72.2",
+    "vite": "5.2.8",
+    "vue-eslint-parser": "10.3.0",
+    "vue-tsc": "2.2.12"
+  }
+}

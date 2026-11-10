@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-11-10T04:13:22.984Z",
+  "scope": "TASK-01 simulator / missing API configuration only",
+  "checks": [
+    "Home page and title rendered",
+    "Missing API configuration is visibly explained, not fake UP",
+    "Retry button returns to the expected configuration message",
+    "Simulator screenshot captured",
+    "No exception/console error observed during this navigation and tap"
+  ],
+  "exceptions": [],
+  "consoleErrors": [],
+  "title": "企业审批系统 · 工程骨架",
+  "initialMessage": "尚未配置 VITE_API_BASE_URL。请配置已备案且加入微信 request 合法域名的 HTTPS 域名后重新构建。",
+  "system": {
+    "brand": "devtools",
+    "model": "iPhone 12/13 (Pro)",
+    "system": "iOS 10.0.1",
+    "platform": "devtools",
+    "benchmarkLevel": -1,
+    "pixelRatio": 3,
+    "screenWidth": 390,
+    "screenHeight": 844,
+    "windowWidth": 390,
+    "windowHeight": 753,
+    "statusBarHeight": 47,
+    "safeArea": {
+      "top": 47,
+      "left": 0,
+      "right": 390,
+      "bottom": 810,
+      "width": 390,
+      "height": 763
+    },
+    "language": "zh_CN",
+    "version": "8.0.5",
+    "fontSizeSetting": 16,
+    "SDKVersion": "3.17.6",
+    "host": {
+      "env": "WeChat"
+    },
+    "enableDebug": false,
+    "mode": "default",
+    "deviceOrientation": "portrait",
+    "bluetoothEnabled": true,
+    "locationEnabled": true,
+    "wifiEnabled": true,
+    "albumAuthorized": true,
+    "cameraAuthorized": true,
+    "locationAuthorized": true,
+    "microphoneAuthorized": true,
+    "notificationAuthorized": true,
+    "notificationAlertAuthorized": true,
+    "notificationBadgeAuthorized": true,
+    "notificationSoundAuthorized": true,
+    "phoneCalendarAuthorized": true,
+    "bluetoothAuthorized": true,
+    "locationReducedAccuracy": true,
+    "devicePixelRatio": 3
+  },
+  "status": "PASS"
+}

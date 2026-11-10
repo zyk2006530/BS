@@ -3,3 +3,12 @@
 *.png binary
 *.jpg binary
 *.zip binary
+
+# Maven wrapper must remain runnable on Unix and Windows.
+*.sh text eol=lf
+mvnw text eol=lf
+*.cmd text eol=crlf
+*.ps1 text eol=lf
+
+# Registry evidence is hashed as raw bytes; never normalize JSON line endings.
+deploy/registry/*.index.json -text
