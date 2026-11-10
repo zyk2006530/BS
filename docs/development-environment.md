@@ -12,7 +12,7 @@
 | Android / iOS 真机 | 未接入 | 两平台机型、系统、微信版本与 HTTPS 请求/上传/下载记录 |
 | SMTP 服务 | 未提供，未验证 | 服务地址、端口、TLS 模式、发件身份与授权方式（密钥仅本地环境注入） |
 | 手机实际收信 | 未运行 | 手机邮件客户端收件时间、脱敏 Message-ID、测试构建编号 |
-| Docker / MySQL 8 | Docker Desktop `4.99.0`、Engine `29.9.3`，Linux 引擎已可用；项目容器未实测 | Compose 实际启动、MySQL 版本、健康与内网检查；静态检查不能替代 |
+| Docker / MySQL 8 | Docker Desktop `4.99.0`、Engine `29.9.3`，Linux 引擎已可用；TASK-02 已用 MySQL `8.4.7` 一次性容器完成迁移、账号权限、演示数据和重启验证 | 整体 `docker compose up`、Nginx 到后端、空环境健康门禁仍待 T15 实测；静态检查和直接容器测试不能替代 |
 
 ## 填写与验证顺序
 
@@ -21,6 +21,6 @@
 3. 移动端只配置公开的 API HTTPS 地址；AppID 按移动工程说明配置。禁止以关闭域名校验作为完成证据。
 4. 添加 Android 和 iOS 体验成员，在实际设备测试请求与传输；记录设备和构建，不用开发工具截图冒充真机。
 5. SMTP 使用专用测试邮箱，服务端环境注入授权码；手机邮件客户端实际收信后只提交脱敏结果。
-6. 更新本表、[TASK-01 验证记录](<../specs/001-enterprise-approval/task-01-validation.md>)和机器清单。所有完成条件满足前，TASK-01 不能记为 done；T15/T21 不因骨架检查通过而自动 PASS。
+6. 更新本表、[TASK-01 验证记录](<../specs/001-enterprise-approval/task-01-validation.md>)、[TASK-02 验证记录](<../specs/001-enterprise-approval/task-02-validation.md>)和机器清单。所有完成条件满足前，TASK-01 不能记为 done；T15/T21 不因骨架检查通过而自动 PASS。TASK-02 已因数据库迁移不依赖微信/SMTP 外部接入而调整依赖，见其验证记录。
 
 当前已收到 AppID 并完成已登录开发者工具的模拟器页面/重试按钮检查，详见[移动端验证记录](../mobile/VALIDATION.md)。其余平台资源、真实 HTTPS 网络、真机与邮件实测尚未完成。模拟器通过不代表上述条件通过。

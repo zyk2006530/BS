@@ -1,6 +1,6 @@
 # 企业审批系统
 
-《BS 体系软件设计》课程项目。当前已建立规格基线，并进入 **TASK-01 工程骨架**：Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程及部署配置；尚无审批业务实现。TASK-01 的外部接入条件仍待实测，不能据此声称业务可用。
+《BS 体系软件设计》课程项目。当前已建立规格基线，并完成 **TASK-02 数据库迁移和最小初始化**：18 张基础表、幂等生产种子、演示初始化、业务/迁移账号分离及真实 MySQL 8.4.7 验证；同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无审批 API 和流程执行，不能据此声称业务可用。
 
 ## 从这里开始
 
@@ -13,7 +13,8 @@
 | [验收方案](<specs/001-enterprise-approval/acceptance.md>) | PDF T01—T22 的可执行验证步骤；业务测试均待运行 |
 | [差异分析](<specs/001-enterprise-approval/gap-analysis.md>) | 历史设计与最新方案差异、当前缺口 |
 | [工程约束](<.specify/memory/constitution.md>) | 安全、并发、独立编码及证据要求 |
-| [本轮验证记录](<specs/001-enterprise-approval/validation.md>) | 规格检查器单测、基线检查和未执行业务项 |
+| [规格验证记录](<specs/001-enterprise-approval/validation.md>) | 规格检查器单测、基线检查和未执行业务项 |
+| [TASK-02 验证记录](<specs/001-enterprise-approval/task-02-validation.md>) | 18 张基础表、真实 MySQL 约束/权限、演示数据与生产分离证据 |
 
 ## 最新设计的关键选择
 
@@ -39,13 +40,13 @@ python scripts/verify_specs.py
 python -m unittest discover -s tests -p "test_*.py" -v
 ```
 
-第一条检查 PDF 指纹、需求/任务/验收覆盖、依赖、状态与证据、本轮规格文档链接；第二条测试规格检查器和部署静态约束，**不验证审批业务，也不启动 Docker**。可用 `--source-pdf "..\交付\中期设计文档-优化版.pdf"` 额外核对外部原件。
+第一条检查 PDF 指纹、需求/任务/验收覆盖、依赖、状态与证据、本轮规格文档链接；第二条测试规格检查器和部署静态约束，**不验证审批业务，也不启动 Docker**；真实 MySQL 迁移和权限证据由 `python scripts/verify_task02_mysql.py` 单独生成。可用 `--source-pdf "..\交付\中期设计文档-优化版.pdf"` 额外核对外部原件。
 
 ## 历史材料与当前缺口
 
 [旧版设计稿](<docs/设计文档.md>)保留历史正文，但不再作为实现依据；其中 JWT、WebSocket 和强制模板迁移等规则已被取代。报告源文件与原型的构建方式见[中期文档说明](<docs/midterm/README.md>)。
 
-Java 17/Maven 已提供工作区局部配置；Docker/MySQL 容器、微信 AppID/HTTPS 合法域名、SMTP 及真机环境仍待准备和实测。详见[环境条件清单](<docs/development-environment.md>)与 [TASK-01 验证记录](<specs/001-enterprise-approval/task-01-validation.md>)。数据库迁移和业务 CI 留待后续任务；本次只新增工程检查，未执行 T01—T22。
+Java 17/Maven 已提供工作区局部配置；真实 MySQL 8.4.7 迁移、账号权限和演示数据已在 TASK-02 验证。微信 AppID/HTTPS 合法域名、体验成员、SMTP 及真机环境仍待准备和实测；TASK-01 保持 `in_progress`。详见[环境条件清单](<docs/development-environment.md>)、[TASK-01 验证记录](<specs/001-enterprise-approval/task-01-validation.md>)和 [TASK-02 验证记录](<specs/001-enterprise-approval/task-02-validation.md>)。业务 API、采购/流程闭环和 T11/T15/T18/T20/T22 验收仍待后续任务；本次没有执行真实 Compose 整体启动。
 
 ## 运行工程骨架
 

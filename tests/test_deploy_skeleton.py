@@ -1,4 +1,4 @@
-"""Standard-library static guards for TASK-01 deployment; never runs/emulates Docker."""
+"""Standard-library static guards for the TASK-01/02 deployment contract; never runs Docker."""
 from __future__ import annotations
 
 import copy
@@ -30,16 +30,20 @@ def validate_config(config: dict, backend: str, frontend: str, nginx: str) -> No
             raise ValueError(message)
 
     services = config["services"]
-    require(set(services) == {"frontend", "backend", "mysql"}, "exactly three services")
+    require(
+        set(services) == {"frontend", "backend", "mysql", "migrate"},
+        "exactly three long-running services plus the migration job",
+    )
     require(services["frontend"].get("ports") == ["127.0.0.1:8088:80"], "loopback-only development HTTP")
-    for name in ("backend", "mysql"):
-        require(not services[name].get("ports"), "no backend/database published ports")
+    for name in ("backend", "mysql", "migrate"):
+        require(not services[name].get("ports"), "no backend/database/migration published ports")
     for service in services.values():
         require(not service.get("privileged"), "no privileged containers")
         require(service.get("network_mode") != "host", "no host networking")
         require(not service.get("links"), "no implicit legacy network links")
     require(config["networks"]["data"].get("internal") is True, "private database network")
     require(services["mysql"]["networks"] == ["data"], "mysql only on private network")
+    require(services["migrate"]["networks"] == ["data"], "migration job only on private network")
     require(services["frontend"]["networks"] == ["app"], "frontend cannot join database network")
     require(set(services["backend"]["networks"]) == {"app", "data"}, "backend network bridge")
     require(services["mysql"]["image"] == EXPECTED_MYSQL, "exact MySQL image version")
@@ -49,23 +53,60 @@ def validate_config(config: dict, backend: str, frontend: str, nginx: str) -> No
         require(services[name]["image"] == f"approval-{name}:0.1.0-skeleton", "version local build images")
         build = services[name]["build"]
         require(build == {"context": "..", "dockerfile": f"deploy/{name}.Dockerfile"}, "reviewed build context")
+    require(services["migrate"]["image"] == "approval-backend:0.1.0-skeleton", "migration reuses backend artifact")
+    require("build" not in services["migrate"], "migration must not rebuild the backend")
     mysql_env = services["mysql"]["environment"]
     backend_env = services["backend"]["environment"]
-    for key in ("MYSQL_ROOT_PASSWORD", "MYSQL_PASSWORD"):
+    migrate_env = services["migrate"]["environment"]
+    for key in ("MYSQL_ROOT_PASSWORD", "MYSQL_APP_PASSWORD", "MYSQL_MIGRATION_PASSWORD"):
         require(bool(REQUIRED_SECRET.fullmatch(mysql_env[key])), "passwords must use required environment expansion")
     require(mysql_env["MYSQL_ROOT_PASSWORD"].startswith("${MYSQL_ROOT_PASSWORD:?"), "root password variable")
-    require(mysql_env["MYSQL_PASSWORD"].startswith("${MYSQL_APP_PASSWORD:?"), "app password variable")
-    require(backend_env["DB_PASSWORD"] == mysql_env["MYSQL_PASSWORD"], "backend uses non-root credential")
-    require(backend_env["DB_USERNAME"] == mysql_env["MYSQL_USER"], "backend uses app account")
-    require(bool(REQUIRED_SECRET.fullmatch(mysql_env["MYSQL_USER"])), "require non-root account selection")
-    require(not any(key in mysql_env for key in ("MYSQL_ALLOW_EMPTY_PASSWORD", "MYSQL_RANDOM_ROOT_PASSWORD", "MYSQL_ROOT_HOST")), "no empty/implicit/remote-root bootstrap")
-    require(services["mysql"]["volumes"] == ["mysql-data:/var/lib/mysql"], "database volume only; no SQL init mounts")
+    require(mysql_env["MYSQL_APP_PASSWORD"].startswith("${MYSQL_APP_PASSWORD:?"), "app password variable")
+    require(
+        mysql_env["MYSQL_MIGRATION_PASSWORD"].startswith("${MYSQL_MIGRATION_PASSWORD:?"),
+        "migration password variable",
+    )
+    require("MYSQL_USER" not in mysql_env and "MYSQL_PASSWORD" not in mysql_env, "init script creates fixed accounts")
+    require(
+        not any(
+            key in mysql_env
+            for key in ("MYSQL_ALLOW_EMPTY_PASSWORD", "MYSQL_RANDOM_ROOT_PASSWORD", "MYSQL_ROOT_HOST")
+        ),
+        "no empty/implicit/remote-root bootstrap",
+    )
+    require(backend_env["DB_USERNAME"] == "approval_app", "backend uses the application account")
+    require(backend_env["DB_PASSWORD"] == mysql_env["MYSQL_APP_PASSWORD"], "backend uses app credential")
+    require(backend_env["SPRING_PROFILES_ACTIVE"] == "db", "backend activates the database profile")
+    require(backend_env["SPRING_FLYWAY_ENABLED"] == "false", "backend never migrates at runtime")
+    require(not any(key.startswith("DB_MIGRATION_") for key in backend_env), "backend has no migration credential")
+    require(migrate_env["DB_USERNAME"] == "approval_migrator", "migration uses the migration account")
+    require(migrate_env["DB_PASSWORD"] == mysql_env["MYSQL_MIGRATION_PASSWORD"], "migration uses migration credential")
+    require(migrate_env["DB_MIGRATION_USER"] == "approval_migrator", "Flyway uses the migration account")
+    require(migrate_env["DB_MIGRATION_PASSWORD"] == mysql_env["MYSQL_MIGRATION_PASSWORD"], "Flyway migration credential")
+    command = services["migrate"]["command"]
+    require("--spring.profiles.active=db,migrate" in command, "migration profile is explicit")
+    require("--spring.main.web-application-type=none" in command, "migration job is one-shot")
+    require(
+        not any(part in {"java", "-jar", "/opt/approval/app.jar"} for part in command),
+        "migration command must inherit the image entrypoint, not repeat it",
+    )
+    require(services["migrate"]["restart"] == "no", "migration job does not restart")
+    require(
+        services["mysql"]["volumes"]
+        == ["mysql-data:/var/lib/mysql", "./mysql/init:/docker-entrypoint-initdb.d:ro"],
+        "database volume plus reviewed account-init mount only",
+    )
     require(services["backend"]["volumes"] == ["uploads:/var/lib/approval/uploads"], "private backend uploads volume")
+    require(not services["migrate"].get("volumes"), "migration job has no data volume")
     require(not services["frontend"].get("volumes"), "no shared frontend attachment volume")
     require(config["volumes"] == {"mysql-data": {}, "uploads": {}}, "private named volumes without public bind paths")
     require(backend_env["APP_UPLOAD_DIR"] == "/var/lib/approval/uploads", "private upload path")
-    require(services["backend"]["depends_on"] == {"mysql": {"condition": "service_healthy"}}, "wait for mysql process")
-    require(services["frontend"]["depends_on"] == {"backend": {"condition": "service_healthy"}}, "wait for skeleton health")
+    require(
+        services["backend"]["depends_on"] == {"migrate": {"condition": "service_completed_successfully"}},
+        "backend waits for a successful migration",
+    )
+    require(services["frontend"]["depends_on"] == {"backend": {"condition": "service_healthy"}}, "wait for backend health")
+    require(services["migrate"]["depends_on"] == {"mysql": {"condition": "service_healthy"}}, "wait for mysql")
     health = services["backend"]["healthcheck"]
     require(health["test"] == ["CMD", "java", "/opt/approval/HealthProbe.java"], "JDK-only health probe")
     require("COPY deploy/HealthProbe.java /opt/approval/HealthProbe.java" in backend, "package health probe")
@@ -132,6 +173,12 @@ class DeploySkeletonTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "published ports"):
             self.check(config=config)
 
+    def test_reject_migration_host_port(self) -> None:
+        config = copy.deepcopy(self.config)
+        config["services"]["migrate"]["ports"] = ["8081:8080"]
+        with self.assertRaisesRegex(ValueError, "published ports"):
+            self.check(config=config)
+
     def test_reject_public_development_listener(self) -> None:
         config = copy.deepcopy(self.config)
         config["services"]["frontend"]["ports"] = ["8088:80"]
@@ -157,7 +204,7 @@ class DeploySkeletonTests(unittest.TestCase):
             self.check(config=config)
 
     def test_reject_literal_and_default_passwords(self) -> None:
-        for key in ("MYSQL_PASSWORD", "MYSQL_ROOT_PASSWORD"):
+        for key in ("MYSQL_APP_PASSWORD", "MYSQL_MIGRATION_PASSWORD", "MYSQL_ROOT_PASSWORD"):
             for password in ("password", "", "${PASSWORD:-changeme}", "${PASSWORD}"):
                 with self.subTest(key=key, password=password):
                     config = copy.deepcopy(self.config)
@@ -174,7 +221,19 @@ class DeploySkeletonTests(unittest.TestCase):
     def test_reject_root_backend_account(self) -> None:
         config = copy.deepcopy(self.config)
         config["services"]["backend"]["environment"]["DB_USERNAME"] = "root"
-        with self.assertRaisesRegex(ValueError, "app account"):
+        with self.assertRaisesRegex(ValueError, "application account"):
+            self.check(config=config)
+
+    def test_reject_migration_using_app_account(self) -> None:
+        config = copy.deepcopy(self.config)
+        config["services"]["migrate"]["environment"]["DB_USERNAME"] = "approval_app"
+        with self.assertRaisesRegex(ValueError, "migration account"):
+            self.check(config=config)
+
+    def test_reject_backend_migration_credential(self) -> None:
+        config = copy.deepcopy(self.config)
+        config["services"]["backend"]["environment"]["DB_MIGRATION_USER"] = "approval_migrator"
+        with self.assertRaisesRegex(ValueError, "no migration credential"):
             self.check(config=config)
 
     def test_reject_mutable_mysql_image(self) -> None:
@@ -204,7 +263,7 @@ class DeploySkeletonTests(unittest.TestCase):
     def test_reject_init_sql_mount(self) -> None:
         config = copy.deepcopy(self.config)
         config["services"]["mysql"]["volumes"].append("./init.sql:/docker-entrypoint-initdb.d/init.sql")
-        with self.assertRaisesRegex(ValueError, "no SQL init"):
+        with self.assertRaisesRegex(ValueError, "database volume plus reviewed"):
             self.check(config=config)
 
     def test_reject_healthcheck_with_uninstalled_curl(self) -> None:
@@ -225,7 +284,43 @@ class DeploySkeletonTests(unittest.TestCase):
                 values[key] = value
         self.assertEqual(values["MYSQL_ROOT_PASSWORD"], "")
         self.assertEqual(values["MYSQL_APP_PASSWORD"], "")
-        self.assertNotEqual(values["MYSQL_APP_USER"], "root")
+        self.assertEqual(values["MYSQL_MIGRATION_PASSWORD"], "")
+        self.assertNotIn("MYSQL_APP_USER", values)
+        self.assertNotIn("MYSQL_MIGRATION_USER", values)
+
+    def test_database_init_creates_separate_fixed_accounts(self) -> None:
+        script = (DEPLOY / "mysql/init/01-accounts.sh").read_text(encoding="utf-8")
+        self.assertIn("DROP USER IF EXISTS 'approval_app'@'%';", script)
+        self.assertIn("DROP USER IF EXISTS 'approval_migrator'@'%';", script)
+        self.assertIn("CREATE USER 'approval_app'@'%'", script)
+        self.assertIn("CREATE USER 'approval_migrator'@'%'", script)
+        self.assertIn("WITH GRANT OPTION", script)
+        self.assertIn("MYSQL_DATABASE", script)
+        self.assertIn("GRANT ALL PRIVILEGES ON \\`${MYSQL_DATABASE}\\`.*", script)
+        self.assertIn("MYSQL_APP_PASSWORD", script)
+        self.assertIn("MYSQL_MIGRATION_PASSWORD", script)
+        self.assertNotIn("password123", script.lower())
+
+    def test_runtime_grant_migration_is_least_privilege(self) -> None:
+        sql = (ROOT / "backend/src/main/resources/db/migration/V3__task02_runtime_grants.sql").read_text(
+            encoding="utf-8"
+        )
+        audit_grants = [
+            line for line in sql.splitlines() if line.startswith("GRANT") and "audit_record" in line
+        ]
+        self.assertEqual(
+            audit_grants,
+            [
+                "GRANT SELECT, INSERT ON `${flyway:database}`.`audit_record` "
+                "TO 'approval_app'@'%';"
+            ],
+        )
+        self.assertFalse(
+            any(line.startswith("GRANT") and "approval_record" in line for line in sql.splitlines())
+        )
+        self.assertNotIn("GRANT ALL", sql)
+        self.assertIn("GRANT SELECT, UPDATE ON `${flyway:database}`.`system_config`", sql)
+        self.assertIn("GRANT SELECT ON `${flyway:database}`.`role`", sql)
 
     def test_build_context_is_allowlisted(self) -> None:
         for name in ("backend", "frontend"):

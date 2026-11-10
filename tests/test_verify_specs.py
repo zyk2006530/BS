@@ -89,7 +89,7 @@ class SpecificationCheckerTests(unittest.TestCase):
         self.assert_error("dependency cycle")
 
     def test_active_task_requires_finished_dependencies(self):
-        self.data["tasks"][2]["status"] = "in_progress"
+        self.data["tasks"][4]["status"] = "in_progress"
         self.assert_error("unfinished dependency")
 
     def test_independent_coding_boundary(self):

@@ -1,0 +1,77 @@
+{
+  "task": "TASK-02",
+  "generated_at": "2026-11-10T06:06:48.058852+00:00",
+  "mysql_image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+  "jar_sha256": "1719611741898d448d8df890991dee2a9ca89452a0e7df41ff15d7d5c3113022",
+  "database": "127.0.0.1:62505/approval",
+  "demo_user_state_sha256": "d9a512ff383cfd250309a4511acdbf31560e73460beb623ee2dde306cc7c5e38",
+  "checks": [
+    {
+      "name": "account separation at MySQL init",
+      "status": "PASS",
+      "detail": "application account starts with USAGE only; migration account has schema DDL + GRANT OPTION",
+      "seconds": "0.290"
+    },
+    {
+      "name": "empty-database migration",
+      "status": "PASS",
+      "detail": "V1/V2/V3 applied; 18 tables; 3 departments; 5 roles; zero demo users/inbox rows; config id=1 version=1",
+      "seconds": "6.497"
+    },
+    {
+      "name": "repeated migration does not overwrite data",
+      "status": "PASS",
+      "detail": "second migrate reported up-to-date; counts/config unchanged: ['3', '5', '0', '0', '1']",
+      "seconds": "4.393"
+    },
+    {
+      "name": "demo seed and inbox initialization",
+      "status": "PASS",
+      "detail": "11 users; 11 roles; 11 inbox rows; managers 1/3/5; pending has no department/role; Argon2id parameters exact and salts distinct",
+      "seconds": "6.104"
+    },
+    {
+      "name": "demo reseed does not overwrite accounts",
+      "status": "PASS",
+      "detail": "demo reseed inserted 0; user-state hash unchanged (d9a512ff383cfd25…)",
+      "seconds": "4.693"
+    },
+    {
+      "name": "base seed replay is idempotent",
+      "status": "PASS",
+      "detail": "V2 SQL replayed twice; department/role/config/inbox counts unchanged (3/5/1/11)",
+      "seconds": "0.590"
+    },
+    {
+      "name": "business account cannot mutate audit records",
+      "status": "PASS",
+      "detail": "app INSERT audit succeeds; UPDATE/DELETE/DDL fail with 1142; audit grant is SELECT+INSERT only",
+      "seconds": "0.721"
+    },
+    {
+      "name": "flow/instance tables are not smuggled into TASK-02",
+      "status": "PASS",
+      "detail": "approval_record intentionally absent (TASK-09 owns flow/instance semantics; its grant must be added there)",
+      "seconds": "0.139"
+    },
+    {
+      "name": "FK/unique/check constraints on real MySQL",
+      "status": "PASS",
+      "detail": "unique (department name, username, email), FK, ACTIVE department, rejection reason, submitted fields, CUSTOM template/fixed-type template, single config row, version>=1, draft field nulls, file binding uniqueness/receipt uniqueness, DECIMAL rounding 123.456→123.46, big ID 9007199254740993 round-trips as decimal string",
+      "seconds": "3.758"
+    },
+    {
+      "name": "production and demo databases are separate",
+      "status": "PASS",
+      "detail": "separate approval_prod DB migrated with 0 users/inbox, 3 departments, 5 roles; V3 grants target the second schema; no demo data",
+      "seconds": "10.999"
+    },
+    {
+      "name": "data survives MySQL restart",
+      "status": "PASS",
+      "detail": "container restart preserved 3 departments, 5 roles and 11 users; demo state hash unchanged",
+      "seconds": "5.597"
+    }
+  ],
+  "verdict": "PASS"
+}

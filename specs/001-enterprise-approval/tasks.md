@@ -1,6 +1,6 @@
 # 实施任务与完成条件
 
-当前 `TASK-00` 为 `done`，`TASK-01` 为 `in_progress`（工程骨架实施中，外部接入条件未验证），其余均为 `planned`。机器状态与依赖见[manifest.json](<manifest.json>)。需求定义见[spec.md](<spec.md>)，验收步骤见[acceptance.md](<acceptance.md>)。
+当前 `TASK-00`、`TASK-02` 为 `done`，`TASK-01` 为 `in_progress`（工程骨架实施中，外部接入条件未验证），其余均为 `planned`。机器状态与依赖见[manifest.json](<manifest.json>)。需求定义见[spec.md](<spec.md>)，验收步骤见[acceptance.md](<acceptance.md>)。
 
 `assisted`：不在课程独立编码范围内，可在规格约束下协助实现；`student_only`：仅学生独立编码，不能由 AI 生成实现或共用执行内核。下列业务目录为实施边界规划，不代表相应功能已实现；TASK-01 顶层骨架以验证记录为准。
 
@@ -15,13 +15,14 @@
 - 状态：`in_progress`；责任：`assisted`；依赖：TASK-00；需求：REQ-12；验收：T15、T21。
 - 交付：backend、web、mobile、deploy 工程骨架及 CI；版本、检查命令、许可证和外部条件见 [TASK-01 验证记录](<task-01-validation.md>)、[开发环境](<../../docs/development-environment.md>)。
 - 完成条件：Java 17/Maven、MySQL 8、Node 与包管理器版本可复现；空目录可构建；仅健康检查无业务不冒称采购可用。确认小程序 AppID、合法域名、HTTPS、体验成员和 SMTP 条件并留实测记录。
-- 尚未满足：Docker/MySQL 容器实测、微信正式云端接入/体验成员/真机及 SMTP 真实收件记录；真实 AppID 已配置且开发者工具模拟器已验证，Docker 引擎已可用。因此不标记 `done`；TASK-02 进入条件调整尚未实施。
+- 尚未满足：微信正式云端接入/体验成员/真机及 SMTP 真实收件记录；真实 AppID 已配置且开发者工具模拟器已验证。Docker/MySQL 容器实测已由 TASK-02 接手并在真实 MySQL 8.4.7 上完成。因此本任务不标记 `done`；TASK-02 依赖已于 2026-11-10 调整为 TASK-00，理由见 [TASK-02 验证记录](<task-02-validation.md>)。
 
 ## TASK-02 迁移和最小初始化
 
-- 状态：`planned`；责任：`assisted`；依赖：TASK-01；需求：REQ-01、REQ-02、REQ-03、REQ-09、REQ-10、REQ-12；验收：T11、T15、T18、T20、T22。
+- 状态：`done`；责任：`assisted`；依赖：TASK-00；需求：REQ-01、REQ-02、REQ-03、REQ-09、REQ-10、REQ-12；验收：T11、T15、T18、T20、T22。验证证据：[TASK-02 验证记录](<task-02-validation.md>)。
 - 范围：组织、身份、配置、草稿、文件、收件箱、审计和任务基础表；流程/模板定义及实例语义表由 TASK-09、TASK-10 本人编写，不能在本任务偷带执行实现。
-- 完成条件：空库迁移、重复初始化不覆盖数据；外键/唯一约束真实 MySQL 验证；审批/审计业务账号禁止 UPDATE/DELETE；三部门五角色、收件箱行初始化、生产与演示分离、密码环境注入。
+- 交付：18 张基础表的 Flyway V1、幂等 V2 生产种子、V3 逐表业务授权、仅 `demo` profile 的演示初始化、三常驻服务加一次性迁移作业的 Compose、真实 MySQL 验证脚本。
+- 完成条件：空库迁移、重复初始化不覆盖数据、外键/唯一/检查约束和金额/大 ID 已用真实 MySQL 8.4.7 验证；业务账号对审计只 `SELECT, INSERT`，不能 UPDATE/DELETE 或 DDL；三部门五角色、演示收件箱 11 行、生产/演示数据库分离、密码环境注入均已验证。`approval_record` 按边界未创建，TASK-09 创建时必须追加同一只读/追加授权；因此 T22 仍为 `NOT_RUN`，不能据本任务记录宣称 T11/T15/T18/T20/T22 通过。
 
 ## TASK-03 身份与会话安全
 

@@ -4,10 +4,15 @@
   <parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>3.5.7</version><relativePath/></parent>
   <groupId>cn.edu.approval</groupId><artifactId>approval-backend</artifactId><version>0.1.0-SNAPSHOT</version>
   <name>approval-backend</name><description>TASK-01 health-only skeleton</description>
-  <properties><java.version>17</java.version><project.build.outputTimestamp>2026-11-10T00:00:00Z</project.build.outputTimestamp></properties>
+  <properties><java.version>17</java.version><bouncycastle.version>1.86</bouncycastle.version><project.build.outputTimestamp>2026-11-10T00:00:00Z</project.build.outputTimestamp></properties>
   <dependencies>
     <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId></dependency>
     <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-security</artifactId></dependency>
+    <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-jdbc</artifactId></dependency>
+    <dependency><groupId>org.flywaydb</groupId><artifactId>flyway-core</artifactId></dependency>
+    <dependency><groupId>org.flywaydb</groupId><artifactId>flyway-mysql</artifactId></dependency>
+    <dependency><groupId>com.mysql</groupId><artifactId>mysql-connector-j</artifactId><scope>runtime</scope></dependency>
+    <dependency><groupId>org.bouncycastle</groupId><artifactId>bcprov-jdk18on</artifactId><version>${bouncycastle.version}</version></dependency>
     <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope></dependency>
   </dependencies>
   <build><plugins>

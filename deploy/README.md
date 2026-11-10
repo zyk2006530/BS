@@ -1,8 +1,8 @@
-# TASK-01 开发部署骨架
+# TASK-01/02 开发部署配置
 
-这是三服务开发配置，不是完成的审批产品。当前唯一后端入口是 `GET /api/v1/health`，预期为 `{"status":"UP","stage":"SKELETON","businessReady":false}`。`status=UP` 只说明进程及骨架接口能回应；`businessReady=false` 明确业务尚未就绪。MySQL 的 ping 也只检查进程，不证明迁移、权限或业务数据正确。
+这是三常驻服务加一次性迁移作业的开发配置，不是完成的审批产品。当前后端入口只有 `GET /api/v1/health`，预期为 `{"status":"UP","stage":"SKELETON","businessReady":false}`；`status=UP` 只说明进程及骨架接口能回应，`businessReady=false` 明确审批 API 尚未就绪。MySQL ping 也只检查进程，不证明迁移、权限或业务数据正确。
 
-**仅绑定 `127.0.0.1:8088` 的开发 HTTP，不是生产 HTTPS。** 不可直接改成公网监听当作生产交付，不能用于小程序合法 HTTPS 域名验收。没有生成表、迁移、演示种子、默认业务账户，TASK-02 之前不会借数据库容器启动宣称 T15/T21 已通过。
+**仅绑定 `127.0.0.1:8088` 的开发 HTTP，不是生产 HTTPS。** 不可直接改成公网监听当作生产交付，不能用于小程序合法 HTTPS 域名验收。TASK-02 已加入 18 张基础表、幂等迁移、三部门五角色、独立业务/迁移账号和可选演示数据；采购、流程、文件上传 API 和 T15 整体部署验收仍未完成，不能借数据库容器启动宣称 T15/T21/T22 已通过。
 
 ## 文件与版本
 
@@ -30,7 +30,7 @@
 | Nginx 1.28.0-alpine3.21 | `sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284` |
 | MySQL 8.4.7 | `sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903` |
 
-[镜像锁定记录](<image-lock.json>) 保留时间、官方 URL、响应头摘要、长度、平台；[原始 index 响应](<registry/>) 保留未经重序列化的响应字节，静态测试离线重新哈希并拒绝证据或 digest 被篡改。这里核实的是 registry 元数据，**没有拉取镜像层、构建镜像或运行容器**，不证明运行兼容性、安全扫描或供应链签名验证。可手动只读复核网络上的标签是否仍对应已锁定摘要：
+[镜像锁定记录](<image-lock.json>) 保留时间、官方 URL、响应头摘要、长度、平台；[原始 index 响应](<registry/>) 保留未经重序列化的响应字节，静态测试离线重新哈希并拒绝证据或 digest 被篡改。这里核实的是 registry 元数据；**锁定核验本身没有拉取镜像层、构建镜像或运行容器**，不证明运行兼容性、安全扫描或供应链签名验证。可手动只读复核网络上的标签是否仍对应已锁定摘要：
 
 ```powershell
 python deploy/verify_image_lock.py
@@ -44,9 +44,9 @@ python deploy/verify_image_lock.py
 
 镜像许可表不是完整 SBOM 或法律结论；发布前保留镜像、依赖和基础系统许可通知，并进行漏洞扫描。精确版本保证本阶段可追踪，不代表永久安全或允许跳过补丁评估。
 
-## 开发启动（尚未在本机执行 Docker）
+## 开发启动（迁移已验证，整体 Compose 尚未启动）
 
-前提：已安装并运行支持 Linux 容器的 Docker Engine / Docker Desktop，且 Docker Compose v2 支持 `service_healthy`；能访问上述 registry；磁盘有卷空间。本任务不自动安装 Docker、不启动替代数据库/服务。仓库根目录执行：
+前提：已安装并运行支持 Linux 容器的 Docker Engine / Docker Desktop，且 Docker Compose v2 支持 `service_healthy` 和 `service_completed_successfully`；能访问上述 registry；磁盘有卷空间。TASK-02 用一次性 MySQL 容器完成了迁移、权限和演示数据的直接验证，但尚未执行本文件的 `docker compose up` 整体启动；不要把直接容器测试当作 T15 通过。仓库根目录执行：
 
 ```powershell
 . ./scripts/use-java.ps1
@@ -64,7 +64,7 @@ npm --prefix web run build
 
 ```powershell
 Copy-Item deploy/.env.example deploy/.env
-# 使用本地编辑器填写 deploy/.env：两个独立强随机密码，MYSQL_APP_USER 不得为root。
+# 使用本地编辑器填写 deploy/.env：三个独立强随机密码；账号名固定为 approval_app / approval_migrator，不在此处改。
 # 不在命令行输入密码，不提交该文件；本地文件权限也应限制。
 docker compose --env-file deploy/.env -f deploy/compose.yaml config --quiet
 docker compose --env-file deploy/.env -f deploy/compose.yaml build
@@ -75,9 +75,17 @@ Invoke-RestMethod http://127.0.0.1:8088/api/v1/health
 
 [环境示例](<.env.example>) 的密码为空，Compose 通过 `${VAR:?message}` 在缺失或空值时拒绝配置。不要运行或粘贴会打印解析后环境的 `docker compose config`（不带 `--quiet`）/ `docker inspect`，也不要把 `.env` 或数据库凭据附进日志。环境变量仍可被有 Docker 管理权限的本机操作者查看，因此本配置不能替代生产 secrets 管理。
 
-在浏览器打开 `http://127.0.0.1:8088`，确认页面显示骨架/业务不可用，健康 JSON 保持上述三字段。前端依赖后端骨架健康，后端依赖 MySQL 进程健康；**这不是“迁移成功后开放业务”的实现**，后者须在 TASK-02 及后续集成时增加真实迁移门禁。
+在浏览器打开 `http://127.0.0.1:8088`，确认页面显示骨架/业务不可用，健康 JSON 保持上述三字段。前端依赖后端骨架健康，后端依赖 MySQL 进程健康，并等待一次性 `migrate` 服务成功；迁移失败时 `migrate` 非零退出，后端不会启动。**`businessReady=false` 仍表示审批 API 未实现**，迁移成功只说明基础表和种子就绪。
 
-数据库仅加入 `internal: true` 的 `data` 网络，无任何宿主机 `ports`。前端只在 `app` 网络，不能直接访问数据库；后端桥接二者。数据库字节持久到私有 `mysql-data` 命名卷，附件到仅后端挂载的 `uploads` 命名卷，Nginx 不共享该卷。MySQL 官方入口首次启动只创建空 `approval` schema 和环境指定应用账号；没有挂载 `/docker-entrypoint-initdb.d` 或业务 SQL。应用账号对空 schema 的初始化授权不是最终最小权限配置，审批/审计禁止 UPDATE/DELETE、迁移账号分离等由 TASK-02 负责，不能据此标记安全验收通过。骨架后端此时不消费预留的 `DB_URL` / `DB_USERNAME` / `DB_PASSWORD` / `APP_UPLOAD_DIR`，尚不连接数据库或读写附件。
+数据库仅加入 `internal: true` 的 `data` 网络，无任何宿主机 `ports`。前端只在 `app` 网络，不能直接访问数据库；后端桥接二者。数据库字节持久到私有 `mysql-data` 命名卷，附件到仅后端挂载的 `uploads` 命名卷，Nginx 不共享该卷。MySQL 首次启动执行 [账号初始化脚本](<mysql/init/01-accounts.sh>)，创建固定业务账号 `approval_app` 和迁移账号 `approval_migrator`；初始时业务账号只有 `USAGE`，随后由 `migrate` 服务执行 Flyway V1/V2/V3，V3 才逐表授予业务账号最小权限。审计表只授予 `SELECT, INSERT`；`approval_record` 属于 TASK-09，尚未创建，届时必须追加同样的只读/追加授权。长运行后端不持有迁移账号，且 `SPRING_FLYWAY_ENABLED=false`。Compose 默认不启用 `demo` profile；生产迁移只创建三部门、五角色和配置，不创建演示用户。
+
+需要演示数据时，必须使用独立数据库/卷，不能把演示账号写进生产库。可在一次性容器中显式激活 `db,demo` profile（密码只从环境读取）：
+
+```powershell
+docker compose --env-file deploy/.env -f deploy/compose.yaml run --rm -e APP_DEMO_PASSWORD="$env:APP_DEMO_PASSWORD" migrate --spring.profiles.active=db,demo,migrate --spring.main.web-application-type=none
+```
+
+该命令只是演示环境示例；若 Compose 项目未配置 `APP_DEMO_PASSWORD`，`DemoDataInitializer` 会拒绝空密码。演示库应与生产使用不同 Compose 项目名/卷，并单独清理。
 
 已有数据库卷再次启动不会按新 `.env` 修改旧密码。要轮换凭据应使用受控数据库操作并同步配置；不要误删卷修复。停止开发栈保留数据：
 
@@ -95,7 +103,7 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml down
 python -m unittest discover -s tests -p test_deploy_skeleton.py -v
 ```
 
-[部署测试](<../tests/test_deploy_skeleton.py>) 全部使用 Python 标准库。静态正例及反例防止数据库/后端裸露、HTTP 公网绑定、数据库外网、默认/空密码开关、root 业务账号、可变镜像标签、公共附件卷/alias、SQL 初始化偷带、错误健康命令和不可信反代地址链；不会假装启动 Docker。需要真正验证 Java 探针时设置本机 JDK 路径：
+[部署测试](<../tests/test_deploy_skeleton.py>) 全部使用 Python 标准库。静态正例及反例防止数据库/后端裸露、HTTP 公网绑定、数据库外网、默认/空密码开关、root 业务账号、可变镜像标签、公共附件卷/alias、未审查的 SQL 初始化挂载、错误健康命令和不可信反代地址链；不会假装启动 Docker。账号脚本和 V3 授权的固定内容另有静态断言。需要真正验证 Java 探针时设置本机 JDK 路径：
 
 ```powershell
 $env:DEPLOY_JAVA_HOME = '你的JDK17目录'
@@ -107,14 +115,15 @@ Remove-Item Env:DEPLOY_JAVA_HOME
 
 | 检查 | 真实状态与边界 |
 | --- | --- |
-| 配置静态正反例 | PASS：2026-11-10 实际执行 26 项，含原始 index 哈希与 digest 锁定；见[验证记录](<validation.md>) |
-| Java 探针编译及 HTTP 单测 | PASS：Zulu17.0.17+10 实际执行 6 项（含 source-file mode），总计 32 项通过；不代表 Temurin Linux 镜像实测 |
+| 配置静态正反例 | PASS：2026-11-10 实际执行 37 项，其中 6 项 Java 探针因未设置 `DEPLOY_JAVA_HOME` 明确 SKIP；含原始 index 哈希与 digest 锁定；见[验证记录](<validation.md>) |
+| Java 探针编译及 HTTP 单测 | PASS（条件性）：Zulu17.0.17+10 下 6 项实际执行通过；本次默认运行因未设变量跳过，不代表 Temurin Linux 镜像实测 |
 | registry manifest / digest | PASS：三个官方多架构 index HTTP 200，响应字节 SHA-256 与响应头相等，已锁定 tag@digest |
-| 镜像层拉取 / 镜像构建 / 容器运行 | NOT_RUN；没有 Docker，registry 元数据核验不是容器实测 |
-| Compose config、build、Nginx `-t`、空环境 up | NOT_RUN；本机无 Docker，未安装或启动替代服务 |
-| MySQL 初始化/持久、最小权限、附件持久/下载 | NOT_RUN；TASK-02 与后续真实环境验证 |
+| 镜像拉取 / MySQL 容器运行 | PARTIAL：MySQL 8.4.7 已拉取并用于迁移、账号权限、演示数据和重启测试；Temurin/Nginx 镜像构建与完整 Compose 未运行 |
+| Compose config | PASS：2026-11-10 用临时环境变量执行 `config --quiet`；build、Nginx `-t`、空环境 up 未运行，`migrate` 服务门禁只有静态测试 |
+| Compose build / 整体启动 | NOT_RUN；本次尝试构建后端镜像时 Docker Hub 元数据请求超时，未构建镜像，也未启动整体栈 |
+| MySQL 初始化/迁移、最小权限、重启持久 | PASS（TASK-02 范围）：11 项真实 MySQL 检查通过，证据见 [TASK-02 记录](../specs/001-enterprise-approval/task-02-validation.md)；附件持久/下载不在本次范围 |
 | 生产 HTTPS / 可信反代 / Secure Cookie | NOT_RUN；本配置不是生产 HTTPS，需单独生产配置和证书 |
 | AppID/主体/合法域名/体验成员、安卓/iOS真机、SMTP收信 | NOT_RUN；须用户提供平台/域名/证书/设备/SMTP条件 |
-| 采购、流程、自定义、T15/T21/T22业务验收 | NOT_RUN；健康/配置测试不证明业务已交付 |
+| 采购、流程、自定义、T15/T21/T22业务验收 | NOT_RUN；健康/配置/数据库测试不证明业务已交付 |
 
 生产部署还必须有受控迁移门禁、独立迁移账号/最小权限、证书与 HTTPS、可信来源清单、私有文件鉴权、持久任务、脱敏日志、成组备份恢复和真实业务回归；不要把本文件中的开发便利当作这些完成条件。

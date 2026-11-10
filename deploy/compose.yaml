@@ -14,13 +14,15 @@
       "build": {"context": "..", "dockerfile": "deploy/backend.Dockerfile"},
       "environment": {
         "SERVER_PORT": "8080",
+        "SPRING_PROFILES_ACTIVE": "db",
         "DB_URL": "jdbc:mysql://mysql:3306/approval?connectionTimeZone=UTC",
-        "DB_USERNAME": "${MYSQL_APP_USER:?Set a non-root MYSQL_APP_USER in deploy/.env}",
+        "DB_USERNAME": "approval_app",
         "DB_PASSWORD": "${MYSQL_APP_PASSWORD:?Set MYSQL_APP_PASSWORD in deploy/.env}",
+        "SPRING_FLYWAY_ENABLED": "false",
         "APP_UPLOAD_DIR": "/var/lib/approval/uploads"
       },
       "volumes": ["uploads:/var/lib/approval/uploads"],
-      "depends_on": {"mysql": {"condition": "service_healthy"}},
+      "depends_on": {"migrate": {"condition": "service_completed_successfully"}},
       "healthcheck": {
         "test": ["CMD", "java", "/opt/approval/HealthProbe.java"],
         "interval": "30s", "timeout": "10s", "start_period": "30s", "retries": 3
@@ -28,16 +30,30 @@
       "networks": ["app", "data"],
       "restart": "unless-stopped"
     },
+    "migrate": {
+      "image": "approval-backend:0.1.0-skeleton",
+      "command": ["--spring.profiles.active=db,migrate", "--spring.main.web-application-type=none"],
+      "environment": {
+        "DB_URL": "jdbc:mysql://mysql:3306/approval?connectionTimeZone=UTC",
+        "DB_USERNAME": "approval_migrator",
+        "DB_PASSWORD": "${MYSQL_MIGRATION_PASSWORD:?Set MYSQL_MIGRATION_PASSWORD in deploy/.env}",
+        "DB_MIGRATION_USER": "approval_migrator",
+        "DB_MIGRATION_PASSWORD": "${MYSQL_MIGRATION_PASSWORD:?Set MYSQL_MIGRATION_PASSWORD in deploy/.env}"
+      },
+      "depends_on": {"mysql": {"condition": "service_healthy"}},
+      "networks": ["data"],
+      "restart": "no"
+    },
     "mysql": {
       "image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
       "environment": {
         "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in deploy/.env}",
         "MYSQL_DATABASE": "approval",
-        "MYSQL_USER": "${MYSQL_APP_USER:?Set a non-root MYSQL_APP_USER in deploy/.env}",
-        "MYSQL_PASSWORD": "${MYSQL_APP_PASSWORD:?Set MYSQL_APP_PASSWORD in deploy/.env}"
+        "MYSQL_APP_PASSWORD": "${MYSQL_APP_PASSWORD:?Set MYSQL_APP_PASSWORD in deploy/.env}",
+        "MYSQL_MIGRATION_PASSWORD": "${MYSQL_MIGRATION_PASSWORD:?Set MYSQL_MIGRATION_PASSWORD in deploy/.env}"
       },
       "command": ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"],
-      "volumes": ["mysql-data:/var/lib/mysql"],
+      "volumes": ["mysql-data:/var/lib/mysql", "./mysql/init:/docker-entrypoint-initdb.d:ro"],
       "healthcheck": {
         "test": ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_ROOT_PASSWORD\" mysqladmin ping --host=127.0.0.1 --user=root --silent"],
         "interval": "10s", "timeout": "5s", "start_period": "45s", "retries": 10
