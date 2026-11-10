@@ -4,6 +4,8 @@
 
 本文件保留 TASK-00 历史结果；2026-11-10 后续工程进展另见 [TASK-01 验证记录](<task-01-validation.md>) 和 [TASK-02 验证记录](<task-02-validation.md>)，不得将历史“无工程”描述当作当前目录清单。
 
+2026-11-10 已切换到工程修订版，增量及实际结果见[工程修订版增量验证](<engineering-validation.md>)；新增身份与会话服务的实现和执行结果独立记入 [TASK-03 验证记录](<task03-validation.md>)。下文 PDF 指纹、原件命令和执行结果均为旧基线历史；当前清单已不接受优化版原件，复现当前规格应使用增量记录中的工程修订版命令。
+
 ## 环境与基线
 
 - Windows PowerShell；使用会话提供的 Python 3.12.14 运行时（通过 `python --version` 实测）。
@@ -33,4 +35,4 @@ git diff --check
 
 ## 未执行项与下一步
 
-TASK-03—TASK-15 待实施；TASK-01 仍为 `in_progress`，其微信云端/体验成员/真机与 SMTP 条件未满足；TASK-02 已完成数据库迁移和最小初始化，但业务 API、流程执行和 T11/T15/T18/T20/T22 仍未完成。TASK-09、TASK-10 是本人独立编码边界。Java/Maven、Docker 与 MySQL 8.4.7 已具备并用于 TASK-02 验证；小程序主体/AppID/合法域名/HTTPS、体验成员、真机与 SMTP 需要后续确认。优先按[任务列表](<tasks.md>)从身份、组织和公共草稿继续，而不是将本记录中的 PASS 转写为业务已完成。
+TASK-03 身份后端已完成，执行结果独立记录在 [TASK-03 验证记录](<task03-validation.md>)；TASK-04—TASK-15 待实施。TASK-01 仍为 `in_progress`，其微信云端/体验成员/真机与 SMTP 条件未满足；TASK-02 已完成数据库基线及 V4 工程增量，但审批流程、整体 Compose 和 T01—T22 跨任务验收仍未完成。TASK-09、TASK-10 是本人独立编码边界。Java/Maven、Docker 与 MySQL 8.4.7 已用于后端验证；小程序主体/AppID/合法域名/HTTPS、体验成员、真机与 SMTP 仍需后续确认。后续按[任务列表](<tasks.md>)继续组织授权与公共草稿，不将本记录的历史 PASS 转写为整体验收完成。

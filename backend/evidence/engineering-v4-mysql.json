@@ -1,0 +1,49 @@
+{
+  "task": "ENGINEERING_BASELINE_V4",
+  "generated_at": "2026-11-10T06:53:28.774510+00:00",
+  "mysql_image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+  "jar_sha256": "775f270454134feded4cb52fdc646b4ab15e8fd8100ea0836b18c68e81abf97c",
+  "database": "127.0.0.1:55592/approval",
+  "demo_user_state_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "checks": [
+    {
+      "name": "fresh V1-V4",
+      "status": "PASS",
+      "detail": "fresh V1-V4 succeeds; 18 business tables, no demo users/files",
+      "seconds": "6.438"
+    },
+    {
+      "name": "populated V3 upgrade",
+      "status": "PASS",
+      "detail": "V3 -> V4 preserves all metadata, timestamps, draft/submitted applications, 3 bindings, runtime grants and V1-V3 checksums; TEMP/BOUND/FROZEN map to READY",
+      "seconds": "11.740"
+    },
+    {
+      "name": "new metadata constraints and runtime grants",
+      "status": "PASS",
+      "detail": "four states; READY NULL-size/hash and zero-size rejected; lease rules and indexes; app file DML works, DDL/history access/audit UPDATE+DELETE denied (SQL only)",
+      "seconds": "3.522"
+    },
+    {
+      "name": "repeated V4 migrate",
+      "status": "PASS",
+      "detail": "second Flyway migrate leaves data and all checksums unchanged",
+      "seconds": "4.392"
+    },
+    {
+      "name": "Flyway checksum tamper rejection",
+      "status": "PASS",
+      "detail": "tampered V4 history checksum rejected by Flyway; original restored without repair and migrate succeeds",
+      "seconds": "8.300"
+    }
+  ],
+  "verdict": "PASS",
+  "v4_sha256": "b23c43a8bcf6441e23e1a60b6058d95a9331d2e84996fdc58ff5909f3a4450d4",
+  "migration_sha256": {
+    "V1__task02_baseline_schema.sql": "94026f8cbc5f61ef5bb38f76aae95cb6bd268107c3dd856b814a054a06a026b4",
+    "V2__task02_base_seed.sql": "fdbaf35cf4d01ce00b6edb1925e9b33b7feb673534307c65340d71a0bd2bf542",
+    "V3__task02_runtime_grants.sql": "9fb70d3dee5fbc6561d2ababf9ef2d213d382944a9c5ba185710591dea959bbd",
+    "V4__engineering_file_lifecycle.sql": "b23c43a8bcf6441e23e1a60b6058d95a9331d2e84996fdc58ff5909f3a4450d4"
+  },
+  "scope": "database migration only; T01-T22 remain NOT_RUN"
+}

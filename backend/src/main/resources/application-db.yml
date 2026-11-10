@@ -7,6 +7,7 @@ spring:
       maximum-pool-size: 10
       minimum-idle: 2
       connection-timeout: 5000
+      connection-init-sql: SET SESSION innodb_lock_wait_timeout = 3
       validation-timeout: 3000
   flyway:
     enabled: true

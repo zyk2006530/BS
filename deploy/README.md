@@ -1,6 +1,6 @@
-# TASK-01/02 开发部署配置
+# TASK-01/02/03 开发部署配置
 
-这是三常驻服务加一次性迁移作业的开发配置，不是完成的审批产品。当前后端入口只有 `GET /api/v1/health`，预期为 `{"status":"UP","stage":"SKELETON","businessReady":false}`；`status=UP` 只说明进程及骨架接口能回应，`businessReady=false` 明确审批 API 尚未就绪。MySQL ping 也只检查进程，不证明迁移、权限或业务数据正确。
+这是三常驻服务加一次性迁移作业的开发配置，不是完成的审批产品。TASK-03 已提供身份/资料 API，调用和凭据协议见[后端说明](<../backend/README.md>)。健康接口仍为 `GET /api/v1/health`，预期为 `{"status":"UP","stage":"SKELETON","businessReady":false}`；`status=UP` 只说明进程及骨架接口能回应，`businessReady=false` 明确完整审批 API 尚未就绪。MySQL ping 也只检查进程，不证明迁移、权限或业务数据正确。
 
 **仅绑定 `127.0.0.1:8088` 的开发 HTTP，不是生产 HTTPS。** 不可直接改成公网监听当作生产交付，不能用于小程序合法 HTTPS 域名验收。TASK-02 已加入 18 张基础表、幂等迁移、三部门五角色、独立业务/迁移账号和可选演示数据；采购、流程、文件上传 API 和 T15 整体部署验收仍未完成，不能借数据库容器启动宣称 T15/T21/T22 已通过。
 
@@ -64,7 +64,7 @@ npm --prefix web run build
 
 ```powershell
 Copy-Item deploy/.env.example deploy/.env
-# 使用本地编辑器填写 deploy/.env：三个独立强随机密码；账号名固定为 approval_app / approval_migrator，不在此处改。
+# 使用本地编辑器填写 deploy/.env：三个独立强随机密码及至少32字节随机APP_CSRF_SECRET；账号名固定为 approval_app / approval_migrator，不在此处改。
 # 不在命令行输入密码，不提交该文件；本地文件权限也应限制。
 docker compose --env-file deploy/.env -f deploy/compose.yaml config --quiet
 docker compose --env-file deploy/.env -f deploy/compose.yaml build
@@ -73,7 +73,7 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml ps
 Invoke-RestMethod http://127.0.0.1:8088/api/v1/health
 ```
 
-[环境示例](<.env.example>) 的密码为空，Compose 通过 `${VAR:?message}` 在缺失或空值时拒绝配置。不要运行或粘贴会打印解析后环境的 `docker compose config`（不带 `--quiet`）/ `docker inspect`，也不要把 `.env` 或数据库凭据附进日志。环境变量仍可被有 Docker 管理权限的本机操作者查看，因此本配置不能替代生产 secrets 管理。
+[环境示例](<.env.example>) 的密码和CSRF密钥为空，Compose 通过 `${VAR:?message}` 在缺失或空值时拒绝配置。密钥不足32字节时后端拒绝启动。仅本机HTTP示例使用 `APP_COOKIE_SECURE=false` 与精确 `APP_WEB_ORIGIN=http://127.0.0.1:8088`；生产必须改为真实HTTPS源并设 `APP_COOKIE_SECURE=true`，不能复用此HTTP例外。当前身份服务只采用直连 `remoteAddr`，不信任客户端的 `X-Forwarded-For`/`X-Real-IP`：经Nginx访问的用户共享代理IP限流桶，限制偏保守，不得声称已完成生产逐用户IP代理识别。部署生产可信代理前需单独做可信地址配置与伪造头反例。不要运行或粘贴会打印解析后环境的 `docker compose config`（不带 `--quiet`）/ `docker inspect`，也不要把 `.env` 或数据库凭据附进日志。环境变量仍可被有 Docker 管理权限的本机操作者查看，因此本配置不能替代生产 secrets 管理。
 
 在浏览器打开 `http://127.0.0.1:8088`，确认页面显示骨架/业务不可用，健康 JSON 保持上述三字段。前端依赖后端骨架健康，后端依赖 MySQL 进程健康，并等待一次性 `migrate` 服务成功；迁移失败时 `migrate` 非零退出，后端不会启动。**`businessReady=false` 仍表示审批 API 未实现**，迁移成功只说明基础表和种子就绪。
 

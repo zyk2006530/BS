@@ -20,7 +20,7 @@ REQUIRED_DOCS = {
     "README.md", ".specify/memory/constitution.md",
     *(str(SPEC_DIR / name).replace("\\", "/") for name in (
         "README.md", "spec.md", "plan.md", "tasks.md", "acceptance.md", "gap-analysis.md",
-        "validation.md"
+        "validation.md", "engineering-validation.md"
     )),
 }
 

@@ -1,0 +1,97 @@
+{
+  "task": "TASK-03",
+  "generated_at": "2026-11-10T07:15:20.188451+00:00",
+  "verdict": "PASS",
+  "checks": [
+    {
+      "name": "isolated application and least-privilege startup",
+      "status": "PASS",
+      "detail": "fresh V1-V4; real db-profile HTTP app uses approval_app without runtime Flyway, DDL/history denied",
+      "seconds": "12.295"
+    },
+    {
+      "name": "native registration login and secret storage",
+      "status": "PASS",
+      "detail": "native registration normalizes username/email; PENDING/no roles/no department; inbox atomic; Argon2id parameters and SHA-256 session digest verified",
+      "seconds": "2.084"
+    },
+    {
+      "name": "Web CSRF Origin and credential selection",
+      "status": "PASS",
+      "detail": "Web registration/login; signed pre-auth/session-bound CSRF, exact Origin, HttpOnly cookies, sid rotation; mixed/duplicate credentials rejected; client transports cannot cross",
+      "seconds": "0.594"
+    },
+    {
+      "name": "concurrent normalized uniqueness and privilege injection",
+      "status": "PASS",
+      "detail": "two synchronized normalization races each produce 201+409; role/status overposting rejected; injected inbox failure returns redacted retryable503 and rolls back both rows, then recovery succeeds",
+      "seconds": "2.529"
+    },
+    {
+      "name": "durable concurrent account and login IP limits",
+      "status": "PASS",
+      "detail": "8 concurrent account failures => 5x401+3x429/counter=5; 24 concurrent IP attempts => 20x401+4x429/counter=20; both survive application restart",
+      "seconds": "28.975"
+    },
+    {
+      "name": "concurrent registration IP limit",
+      "status": "PASS",
+      "detail": "12 concurrent native registrations => 10x201+2x429; exactly ten users/inboxes and durable IP counter=10",
+      "seconds": "0.853"
+    },
+    {
+      "name": "logout and password change revocation",
+      "status": "PASS",
+      "detail": "logout is idempotent and revokes only current session; password change verifies old secret and revokes all Web/native sessions; old password rejected; Web cookies expire",
+      "seconds": "1.284"
+    },
+    {
+      "name": "forced-password and disabled-account authorization",
+      "status": "PASS",
+      "detail": "SQL-forced mustChangePassword allows me/password only, changing password clears flag/revokes sessions; SQL-DISABLED user denied existing-session auth and new login (not admin API validation)",
+      "seconds": "1.173"
+    },
+    {
+      "name": "idle and absolute session expiry",
+      "status": "PASS",
+      "detail": "SQL-adjusted session clocks: 29min idle accepted, at/after 30min rejected; future absolute deadline accepted, reached deadline rejected; exact frozen-clock boundary belongs to Java unit tests",
+      "seconds": "0.951"
+    },
+    {
+      "name": "versioned profile and confirmation resubmission",
+      "status": "PASS",
+      "detail": "versioned self-profile update rejects stale version; SQL-REJECTED fixture resubmits to PENDING with user/config versions; all registered users retain inbox/no roles",
+      "seconds": "0.890"
+    },
+    {
+      "name": "real database lock timeout and recovery",
+      "status": "PASS",
+      "detail": "real user-row lock exceeds configured 3s timeout => redacted retryable HTTP503; same session succeeds after rollback releases lock",
+      "seconds": "7.423"
+    }
+  ],
+  "planned_check_count": 11,
+  "passed_check_count": 11,
+  "failed_check_count": 0,
+  "jar_sha256": "f3c47b40d8ddc44306da4cb005406dedb29afdfedf33d8a1d1491776c767f7d9",
+  "jar_execution": "one private immutable copy used for migration and every application start",
+  "migration_sha256": {
+    "V1__task02_baseline_schema.sql": "94026f8cbc5f61ef5bb38f76aae95cb6bd268107c3dd856b814a054a06a026b4",
+    "V2__task02_base_seed.sql": "fdbaf35cf4d01ce00b6edb1925e9b33b7feb673534307c65340d71a0bd2bf542",
+    "V3__task02_runtime_grants.sql": "9fb70d3dee5fbc6561d2ababf9ef2d213d382944a9c5ba185710591dea959bbd",
+    "V4__engineering_file_lifecycle.sql": "b23c43a8bcf6441e23e1a60b6058d95a9331d2e84996fdc58ff5909f3a4450d4"
+  },
+  "mysql_image": "mysql:8.4.7@sha256:0426ec38c7a10aa45ba383887df7878f74ee70e2fd589c7b69207f3577901903",
+  "application_profile": "db",
+  "runtime_database_account": "approval_app",
+  "migration_database_account": "approval_migrator",
+  "runtime_flyway_enabled": false,
+  "http_requests": 133,
+  "application_starts": 2,
+  "jvm_timezone": "Asia/Shanghai",
+  "identity_success_envelopes_checked": 44,
+  "fixture_scope": "disposable MySQL only; SQL resets limiter buckets between independent checks and sets account/session fixtures",
+  "transport_scope": "loopback HTTP only; Secure=false test configuration, not TLS/deployment acceptance",
+  "scope": "TASK-03 HTTP/SQL black-box only; no administrative API, no TASK09/10, no full T01-T22 acceptance promotion",
+  "credentials_recorded": false
+}

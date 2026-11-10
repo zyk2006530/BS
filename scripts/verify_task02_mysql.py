@@ -3,7 +3,8 @@
 
 The harness starts the pinned MySQL image with the reviewed account-init script,
 builds the backend jar, runs the one-shot Flyway/demo profiles, and checks the
-TASK-02 completion conditions. It deliberately does not mark T11/T15/T18/T20/T22
+TASK-02 completion conditions at its historical V3 schema target. Newer migrations
+are verified by verify_engineering_mysql.py with separate evidence. It deliberately does not mark T11/T15/T18/T20/T22
 as PASS: those acceptance cases also require the application APIs, workflow,
 deployment and audit features that do not exist yet.
 
@@ -90,8 +91,9 @@ def free_port() -> int:
 
 
 class MysqlHarness:
-    def __init__(self, java: Path, *, build: bool, keep: bool):
+    def __init__(self, java: Path, *, build: bool, keep: bool, migration_target: str | None = "3"):
         self.java = java
+        self.migration_target = migration_target
         self.build = build
         self.keep = keep
         self.container = f"approval-task02-it-{secrets.token_hex(4)}"
@@ -206,6 +208,11 @@ class MysqlHarness:
                 "DB_MIGRATION_PASSWORD": password,
             }
         )
+        # Historical TASK-02 replay stays at V3 even when newer migrations exist.
+        # The engineering verifier explicitly selects latest (None).
+        env.pop("SPRING_FLYWAY_TARGET", None)
+        if self.migration_target is not None:
+            env["SPRING_FLYWAY_TARGET"] = self.migration_target
         if demo:
             env["APP_DEMO_PASSWORD"] = self.demo_password
         return env

@@ -19,6 +19,9 @@
         "DB_USERNAME": "approval_app",
         "DB_PASSWORD": "${MYSQL_APP_PASSWORD:?Set MYSQL_APP_PASSWORD in deploy/.env}",
         "SPRING_FLYWAY_ENABLED": "false",
+        "APP_CSRF_SECRET": "${APP_CSRF_SECRET:?Set a random secret of at least 32 bytes in deploy/.env}",
+        "APP_WEB_ORIGIN": "${APP_WEB_ORIGIN:-http://127.0.0.1:8088}",
+        "APP_COOKIE_SECURE": "${APP_COOKIE_SECURE:-false}",
         "APP_UPLOAD_DIR": "/var/lib/approval/uploads"
       },
       "volumes": ["uploads:/var/lib/approval/uploads"],

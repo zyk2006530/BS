@@ -1,12 +1,12 @@
 # 企业审批系统
 
-《BS 体系软件设计》课程项目。当前已建立规格基线，并完成 **TASK-02 数据库迁移和最小初始化**：18 张基础表、幂等生产种子、演示初始化、业务/迁移账号分离及真实 MySQL 8.4.7 验证；同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无审批 API 和流程执行，不能据此声称业务可用。
+《BS 体系软件设计》课程项目。已完成 **TASK-02 数据库迁移、工程增量验证与 TASK-03 身份会话后端**：18 张基础表、幂等种子、账号最小权限、文件状态 V4 兼容迁移，以及注册/登录、持久会话、CSRF、限流和资料安全；真实 MySQL 8.4.7 验证见各任务记录。同时保留 TASK-01 的 Spring Boot 健康接口、Vue 桌面端、uni-app 微信小程序构建工程。尚无审批 API 和流程执行，不能据此声称完整业务可用。
 
 ## 从这里开始
 
 | 入口 | 用途 |
 |---|---|
-| [最新版设计 PDF](<docs/midterm/中期设计文档-修订版.pdf>) | 与用户指定的优化版交付文件字节一致，作为设计依据 |
+| [最新版设计 PDF](<docs/midterm/中期设计文档-工程修订版.pdf>) | 与用户指定的工程修订版交付文件字节一致，作为当前设计依据；优化版保留为历史基线 |
 | [规格入口](<specs/001-enterprise-approval/README.md>) | 需求 → 技术计划 → 任务 → 验收的阅读与开发顺序 |
 | [需求规格](<specs/001-enterprise-approval/spec.md>) | 12 组需求及业务边界 |
 | [实施任务](<specs/001-enterprise-approval/tasks.md>) | 依赖、负责人边界和完成条件 |
@@ -15,6 +15,8 @@
 | [工程约束](<.specify/memory/constitution.md>) | 安全、并发、独立编码及证据要求 |
 | [规格验证记录](<specs/001-enterprise-approval/validation.md>) | 规格检查器单测、基线检查和未执行业务项 |
 | [TASK-02 验证记录](<specs/001-enterprise-approval/task-02-validation.md>) | 18 张基础表、真实 MySQL 约束/权限、演示数据与生产分离证据 |
+| [工程增量验证](<specs/001-enterprise-approval/engineering-validation.md>) | V3→V4 状态兼容、空库、约束与 checksum 防篡改 |
+| [TASK-03 验证记录](<specs/001-enterprise-approval/task03-validation.md>) | 身份会话 API、凭据安全、并发限流及真实数据库证据 |
 
 ## 最新设计的关键选择
 
@@ -40,13 +42,13 @@ python scripts/verify_specs.py
 python -m unittest discover -s tests -p "test_*.py" -v
 ```
 
-第一条检查 PDF 指纹、需求/任务/验收覆盖、依赖、状态与证据、本轮规格文档链接；第二条测试规格检查器和部署静态约束，**不验证审批业务，也不启动 Docker**；真实 MySQL 迁移和权限证据由 `python scripts/verify_task02_mysql.py` 单独生成。可用 `--source-pdf "..\交付\中期设计文档-优化版.pdf"` 额外核对外部原件。
+第一条检查 PDF 指纹、需求/任务/验收覆盖、依赖、状态与证据、本轮规格文档链接；第二条测试规格检查器和部署静态约束，**不验证审批业务，也不启动 Docker**；真实 MySQL 迁移和权限证据由 `python scripts/verify_task02_mysql.py` 单独生成。可用 `--source-pdf "..\交付\中期设计文档-工程修订版.pdf"` 额外核对外部原件。工程修订版的文件生命周期兼容迁移另由 `python scripts/verify_engineering_mysql.py` 验证，结果独立保存，不覆盖 TASK-02 历史证据；详见[增量验证记录](<specs/001-enterprise-approval/engineering-validation.md>)。
 
 ## 历史材料与当前缺口
 
 [旧版设计稿](<docs/设计文档.md>)保留历史正文，但不再作为实现依据；其中 JWT、WebSocket 和强制模板迁移等规则已被取代。报告源文件与原型的构建方式见[中期文档说明](<docs/midterm/README.md>)。
 
-Java 17/Maven 已提供工作区局部配置；真实 MySQL 8.4.7 迁移、账号权限和演示数据已在 TASK-02 验证。微信 AppID/HTTPS 合法域名、体验成员、SMTP 及真机环境仍待准备和实测；TASK-01 保持 `in_progress`。详见[环境条件清单](<docs/development-environment.md>)、[TASK-01 验证记录](<specs/001-enterprise-approval/task-01-validation.md>)和 [TASK-02 验证记录](<specs/001-enterprise-approval/task-02-validation.md>)。业务 API、采购/流程闭环和 T11/T15/T18/T20/T22 验收仍待后续任务；本次没有执行真实 Compose 整体启动。
+Java 17/Maven 已提供工作区局部配置；真实 MySQL 8.4.7 迁移、账号权限和演示数据已在 TASK-02 验证。微信 AppID/HTTPS 合法域名、体验成员、SMTP 及真机环境仍待准备和实测；TASK-01 保持 `in_progress`。详见[环境条件清单](<docs/development-environment.md>)、[TASK-01 验证记录](<specs/001-enterprise-approval/task-01-validation.md>)和 [TASK-02 验证记录](<specs/001-enterprise-approval/task-02-validation.md>)。审批业务 API、采购/流程闭环和 T11/T15/T18/T20/T22 验收仍待后续任务；本次没有执行真实 Compose 整体启动。身份与会话后端的局部实测另见 [TASK-03 记录](<specs/001-enterprise-approval/task03-validation.md>)。
 
 ## 运行工程骨架
 
@@ -59,6 +61,6 @@ Java 17/Maven 已提供工作区局部配置；真实 MySQL 8.4.7 迁移、账�
 ./backend/mvnw.cmd -f backend/pom.xml spring-boot:run
 ```
 
-后端仅提供 `GET http://127.0.0.1:8080/api/v1/health`，返回 `status=UP`、`stage=SKELETON`、`businessReady=false`；未开放业务、登录或管理端点。
+不启用 profile 时仅提供 `GET http://127.0.0.1:8080/api/v1/health`，返回 `status=UP`、`stage=SKELETON`、`businessReady=false`。启用 `db` profile、注入运行账号数据库连接与CSRF密钥后提供 TASK-03 身份/资料 API；具体协议及启动命令见[后端说明](<backend/README.md>)。审批及组织管理端点仍未开放。
 
 在另一个终端进入对应客户端目录，分别执行 `npm ci`、`npm run check`、`npm run build`。使用方式与版本说明见[后端](<backend/README.md>)、[桌面端](<web/README.md>)、[微信小程序](<mobile/README.md>)。Compose 只供本机开发，需先生成 jar 与 Web dist；命令和未验证项见[部署说明](<deploy/README.md>)。

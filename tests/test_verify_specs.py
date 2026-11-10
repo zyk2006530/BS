@@ -89,7 +89,14 @@ class SpecificationCheckerTests(unittest.TestCase):
         self.assert_error("dependency cycle")
 
     def test_active_task_requires_finished_dependencies(self):
-        self.data["tasks"][4]["status"] = "in_progress"
+        tasks = {task["id"]: task for task in self.data["tasks"]}
+        active = tasks["TASK-04"]
+        active["status"] = "in_progress"
+        # Construct an unfinished prerequisite instead of relying on repository progress.
+        tasks[active["dependsOn"][0]]["status"] = "planned"
+        self.put((checker.SPEC_DIR / "tasks.md").as_posix(),
+                 "\n".join(f"## {task['id']} Fixture\n状态：`{task['status']}`\n"
+                           for task in self.data["tasks"]))
         self.assert_error("unfinished dependency")
 
     def test_independent_coding_boundary(self):

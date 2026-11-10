@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /** Health-only deny-by-default boundary, not TASK-03 authentication. */
 @Configuration
-@Profile("!migrate")
+@Profile("!db & !migrate")
 public class SkeletonSecurityConfiguration {
   @Bean
   SecurityFilterChain skeletonSecurity(HttpSecurity http) throws Exception {
